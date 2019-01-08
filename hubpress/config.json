@@ -9,10 +9,10 @@
     "name": "casper"
   },
   "urls": {
-    "site": "https://pharriso.github.io/hubpress.io",
-    "hubpress": "https://pharriso.github.io/hubpress.io",
-    "theme": "//pharriso.github.io/hubpress.io/themes/casper",
-    "images": "https://pharriso.github.io/hubpress.io/images"
+    "site": "http://cloudautomation.pharriso.co.uk",
+    "hubpress": "https://cloudautomation.pharriso.co.uk",
+    "theme": "//cloudautomation.pharriso.co.uk/themes/casper",
+    "images": "http://cloudautomation.pharriso.co.uk/images"
   },
   "initialisationConfigComponent": {
     "name": "initialise-configuration",
