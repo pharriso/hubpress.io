@@ -1,6 +1,6 @@
 = Infrastructure Migration Solution
 
-While VMware is undoubtably a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.
+While VMware is undoubtedly a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.
 
 Other customers simply want to save costs and are looking at alternative virtualisation offerings. 
 
