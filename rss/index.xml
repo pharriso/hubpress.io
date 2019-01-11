@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[Focusing mainly on Red Hat products in the Cloud and Automat ion space. Currently working as a Solution Architect for Red Hat in the UK.]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 08 Jan 2019 22:04:41 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RHV Disaster Recovery - Part I]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[Focusing mainly on Red Hat products in the Cloud and Automat ion space. Currently working as a Solution Architect for Red Hat in the UK.]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Fri, 11 Jan 2019 11:44:04 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Infrastructure Migration Solution]]></title><description><![CDATA[<div class="paragraph">
+<p>While VMware is undoubtably a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.</p>
+</div>
+<div class="paragraph">
+<p>Other customers simply want to save costs and are looking at alternative virtualisation offerings.</p>
+</div>
+<div class="paragraph">
+<p>Whatever the reason for moving from VMware, we need a method for migrating workloads to RHV.</p>
+</div>
+<div class="paragraph">
+<p>This is what our Infrastructure Migration Solution (IMS) provides. A simple method for migrating workloads from VMware to RHV.</p>
+</div>
+<div class="paragraph">
+<p>We use a tool called CloudForms to drive the migration process (ManageIQ is the upstream project for CloudForms).</p>
+</div>
+<div class="paragraph">
+<p>CloudForms is a manager of managers and can interact with various endpoints which are known as providers. A provider could be VMware vSphere, Red Hat Virtualisation, AWS, OpenStack etc.</p>
+</div>
+<div class="paragraph">
+<p>CloudForms is able to ingest information from these providers such as configuration details and performance metrics as well as orchestrate these providers.</p>
+</div>
+<div class="paragraph">
+<p>Using the new CloudForms "migration" tooling we can create mappings between VMware infrastructure and Red Hat Virtualisation. These include clusters, storage and networking. We can then detect the VM&#8217;s currently running in VMware and using virt-v2v under the covers we can automate the migration of those VM&#8217;s across to RHV.</p>
+</div>
+<div class="paragraph">
+<p>This short video shows a demo of the process.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe src="https://www.youtube.com/embed/NdjGuJaDSOU?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>]]></description><link>http://cloudautomation.pharriso.co.uk/2019/01/09/Infrastructure-Migration-Solution.html</link><guid isPermaLink="true">http://cloudautomation.pharriso.co.uk/2019/01/09/Infrastructure-Migration-Solution.html</guid><pubDate>Wed, 09 Jan 2019 00:00:00 GMT</pubDate></item><item><title><![CDATA[RHV Disaster Recovery - Part I]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Since the release of Red Hat Virtualisation (RHV) 4.1 back in 2017 we have seen the inclusion of Disaster Recovery (DR) solutions. The aim of these solutions is to allow customers to deploy their RHV infrastructure to span multiple sites and allow failover of virtual machines in the event of a disaster. This post will take a look at these Disaster Recovery solutions.</p>
