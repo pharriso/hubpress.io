@@ -1,27 +1,20 @@
 = Infrastructure Migration Solution
 
-I have spent a fair amount of my career working with VMware technologies. Back around 2008 I was working in a Linux/Unix Project team implementing new solutions based primarily on RHEL. We had a small VMware Test environment at the time which we also managed in my team. Like many organisations at the time, we felt that x86 virtualisatin was ready for production. It soon blew up and we had hundreds of ESXi hosts within a couple of years. VMware was miles ahead of the pack at the time with it's virtualisation offering and had a great product.
+While VMware is undoubtably a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.
 
-Virtualisation is now mainstream with many organisations virtualising the majority of their infrastructure. VMware still has a great product in this space but other products have slowly been catching up with the features that really matter. In addition to this, customers are investing in public cloud offerings and also looking at new ways of working. Cloud Native applications, containerisation and hybrid cloud are all important topics for many Red Hat customers.
+Other customers simply want to save costs and are looking at alternative virtualisation offerings. 
 
-If I look back to 2008, RHEL was trusted in our organisation but we weren't using much other Open Source software. Fast forward to today and Open Source software is tried and trusted by most organisations. KVM virtualisation used in Red Hat's virtualisation offerings (OpenStack and Red Hat Virtualisation) is also used by major public cloud providers for their hypervisors including Google and Amazon.
+Whatever the reason for moving from VMware, we need a method for migrating workloads to RHV.
 
-So while traditional virtualisation platforms are still fundamental to most organisations, many are looking to invest in future technologies such as container platforms.
-
-Add something about CNV.
-
-== What is Infrastructure Migration Solution?
-
-In a nutshell, Infrastructure Migration Solution (IMS) provides a method for migrating workloads from VMware to RHV.
+This is what our Infrastructure Migration Solution (IMS) provides. A simple method for migrating workloads from VMware to RHV.
 
 We use a tool called CloudForms to drive the migration process (ManageIQ is the upstream project for CloudForms).
 
-CloudForms can manage various endpoints which are known as providers. A provider could be VMware vSphere, Red Hat Virtualisation, AWS, OpenStack
-and more.
+CloudForms is a manager of managers and can interact with various endpoints which are known as providers. A provider could be VMware vSphere, Red Hat Virtualisation, AWS, OpenStack etc.
 
 CloudForms is able to ingest information from these providers such as configuration details and performance metrics as well as orchestrate these providers. 
 
-Using the new CloudForms "migration" tooling we can create mappings between VMware vSphere infrastructure and Red Hat Virtualisation such as clusters, storage and networking. We can then detect the VM's currently running in VMware and using virt-v2v under the covers we can automate the migration of those VM's across to RHV.
+Using the new CloudForms "migration" tooling we can create mappings between VMware infrastructure and Red Hat Virtualisation. These include clusters, storage and networking. We can then detect the VM's currently running in VMware and using virt-v2v under the covers we can automate the migration of those VM's across to RHV.
 
 This short video shows a demo of the process.
 
