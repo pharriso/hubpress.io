@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I Currently working as a Solution Architect for Red Hat in the UK.]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Fri, 11 Jan 2019 12:21:49 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Infrastructure Migration Solution]]></title><description><![CDATA[<div class="paragraph">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I Currently working as a Solution Architect for Red Hat in the UK.]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Fri, 11 Jan 2019 12:47:16 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Infrastructure Migration Solution]]></title><description><![CDATA[<div class="paragraph">
 <p>While VMware is undoubtedly a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.</p>
 </div>
 <div class="paragraph">
@@ -34,16 +34,10 @@
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RHV 4.1 was released back in 2017 and we introduced an Active/Active implementation in which we effectively deploy a stretch cluster spanning two sites.</p>
+<p>RHV 4.1 was released back in 2017 and we introduced an Active/Active implementation in which we effectively deploy a stretch cluster spanning two sites. With the release of RHV 4.2 in May 2018 we introduced additional disaster recovery capabilities. We can now deploy an Active/Passive architecture spanning two sites.</p>
 </div>
 <div class="paragraph">
-<p>With the release of RHV 4.2 in May 2018 we introduced additional disaster recovery capabilities. We can now deploy an Active/Passive architecture spanning two sites.</p>
-</div>
-<div class="paragraph">
-<p>In the event of a disaster we can failover VM&#8217;s from a Primary site to a Secondary DR site. We use the power of Ansible automation to achieve this.</p>
-</div>
-<div class="paragraph">
-<p>Once the issues with the primary site are resolved, we can then perform an automated failback to return our virtual machines to our primary site.</p>
+<p>In the event of a disaster we can failover VM&#8217;s from a Primary site to a Secondary DR site. We use the power of Ansible automation to achieve this. Once the issues with the primary site are resolved, we can then perform an automated failback to return our virtual machines to our primary site.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s take a look at the different implementation options.</p>
@@ -63,10 +57,7 @@
 <p>In addition to the storage replication we also need a stretched network between sites. As we are deploying a single cluster across both sites we need all of the RHV hosts to be in the same Layer 2 network segment. Also VM networks need to be stretched between sites so that that VM&#8217;s can migrate or failover to the secondary site and maintain network connectivity.</p>
 </div>
 <div class="paragraph">
-<p>VM to RHV Host affinity can be used to ensure VM&#8217;s are running in the Primary datacenter where possible and only failed over as part of a disaster.</p>
-</div>
-<div class="paragraph">
-<p>In the event of a disaster in the Primary site, any VM&#8217;s marked as "highly available" will automatically be restarted in the Disaster site without any administrator intervention.</p>
+<p>VM to RHV Host affinity can be used to ensure VM&#8217;s are running in the Primary datacenter where possible and only failed over as part of a disaster. In the event of a disaster in the Primary site, any VM&#8217;s marked as "highly available" will automatically be restarted in the Disaster site without any administrator intervention.</p>
 </div>
 <div class="paragraph">
 <p>The nice thing about the Active/Active setup is that we just rely on native RHV HA to fail VM&#8217;s between sites. It does rely on a storage array that can provide write access to both sites with replication. An example of this would be something like EMC VPLEX.</p>
