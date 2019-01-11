@@ -38,9 +38,7 @@ The Active/Passive configuration can also be used across two sites. As the name 
 
 Unlike the Active/Active architecture, each site must maintain its own RHV Manager which manages the RHV hosts, storage and networks for that site.
 
-From the storage perspective we require replicated storage between sites. However, the storage is only ever attached to one RHV site at a time so it does not need to be writeable at both sites simultaneously.
-
-The same VM networks need to be available in both sites so that VM's that are failed over can be re-attached to the network.
+From the storage perspective we require replicated storage between sites. However, the storage is only ever attached to one RHV site at a time so it does not need to be writeable at both sites simultaneously. The same VM networks need to be available in both sites so that VM's that are failed over can be re-attached to the network.
 
 Here is what an Active/Passive configuration looks like.
 
