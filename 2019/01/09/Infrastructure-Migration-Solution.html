@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1547207222131" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1547209309578" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2019/01/09/Infrastructure-Migration-Solution.html" />
     <meta name="referrer" content="origin" />
@@ -98,22 +98,13 @@
 <p>While VMware is undoubtedly a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.</p>
 </div>
 <div class="paragraph">
-<p>Other customers simply want to save costs and are looking at alternative virtualisation offerings.</p>
+<p>Other customers simply want to save costs and are looking at alternative virtualisation offerings. Whatever the reason for moving from VMware, we need a method for migrating workloads to RHV.</p>
 </div>
 <div class="paragraph">
-<p>Whatever the reason for moving from VMware, we need a method for migrating workloads to RHV.</p>
+<p>This is what our Infrastructure Migration Solution (IMS) provides. A simple method for migrating workloads from VMware to RHV. We use a tool called CloudForms to drive the migration process (ManageIQ is the upstream project for CloudForms).</p>
 </div>
 <div class="paragraph">
-<p>This is what our Infrastructure Migration Solution (IMS) provides. A simple method for migrating workloads from VMware to RHV.</p>
-</div>
-<div class="paragraph">
-<p>We use a tool called CloudForms to drive the migration process (ManageIQ is the upstream project for CloudForms).</p>
-</div>
-<div class="paragraph">
-<p>CloudForms is a manager of managers and can interact with various endpoints which are known as providers. A provider could be VMware vSphere, Red Hat Virtualisation, AWS, OpenStack etc.</p>
-</div>
-<div class="paragraph">
-<p>CloudForms is able to ingest information from these providers such as configuration details and performance metrics as well as orchestrate these providers.</p>
+<p>CloudForms is a manager of managers and can interact with various endpoints which are known as providers. A provider could be VMware vSphere, Red Hat Virtualisation, AWS, OpenStack etc. CloudForms is able to ingest information from these providers such as configuration details and performance metrics as well as orchestrate these providers.</p>
 </div>
 <div class="paragraph">
 <p>Using the new CloudForms "migration" tooling we can create mappings between VMware infrastructure and Red Hat Virtualisation. These include clusters, storage and networking. We can then detect the VM&#8217;s currently running in VMware and using virt-v2v under the covers we can automate the migration of those VM&#8217;s across to RHV.</p>
@@ -219,7 +210,7 @@
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1547207222131"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1547209309578"></script>
 
 
     <script>
