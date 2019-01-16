@@ -8,8 +8,9 @@ In this part, we will look at the Active/Passive implementation in more detail.
 
 As discussed in the part one of this blog, the Active/Passive architecture allows us to fail Virtual Machines over to a Disaster Recovery site in the event of a failure in the Primary site.
 
-We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery
+We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery which are shipped as part of the RHV product.
 
+The first part of the process is generating variables file which maps entities from the Primary site to the DR site. For example, workloads in "Cluster1" in the Primary site should be failed over to "Cluster2" in my DR site.
 
 
 
@@ -151,7 +152,11 @@ Finally, the cleanup playbook. This is used to clean the Primary site up ready f
     - oVirt.disaster-recovery
 ....
 
-== Video Demonstration
+== Failover
+
+== Cleanup and Failback
+
+== Demonstration
 
 The following video demonstrates the failover process.
 
