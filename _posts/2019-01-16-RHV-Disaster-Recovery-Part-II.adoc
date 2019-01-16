@@ -1,6 +1,6 @@
 = RHV Disaster Recovery - Part II
 
-In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. In this part, we will look at the Active/Passive implementation in more detail. 
+In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. In this part, we will look at the Active/Passive implementation in more detail including how to set it up and run it. You'll also find a recorded demo of the failover process.
 
 == Overview
 
@@ -16,21 +16,20 @@ Once the Primary site is brought back online, it must be prepared. This is part 
 
 When ready, the failback playbook can be run. This stops the VM's in the DR site and removes the storage domains from the RHV Manager. The playbook then pauses and waits for the administrator to confirm that replication has been stopped and the storage is now read/write in the Primary site. Once confirmed, the playbook will import the storage domains at the Primary site, register the VM's and start them up. The final step is to ensure the storage replication is switched so that the Primary site is once again replicating to the DR site.
 
-
-
-create mappings
-Need to switch storage replication
-
 == Lab Environment
 
-I am using nested virtualisation for my lab. I've got the following setup:
+I am using nested virtualisation for my lab. For the storage replication, I am using GlusterFS and geo-replication. This is asynchronous replication which is *not* recommended but it serves the purpose for this demo. 
+
+Each "site" has a RHV Manager. The RHV Manager is configured with a single cluster containing a singe RHV Host. I've got two small cirros VM's which I will failover in this demo.
 
 
 == Setup
 
-_All of the files mentioned in this setup section are available in my github repo https://github.com/pharriso/rhv-dr[here]_
+_All of the files mentioned in this setup section are available in my github repo https://github.com/pharriso/rhv-dr[here]_.
 
-*Don't worry. All of the below playbooks are fully documented in the Red Hat documentation for RHV DR*
+*Don't worry. All of the below playbooks are fully documented in the Red Hat documentation for RHV DR.*
+
+===== Generate Mapping
 
 First create a variable file containing the passwords for the RHV manager. I'm creating a file called passwords.yml here with these contents:
 
@@ -101,6 +100,8 @@ dr_cluster_mappings:
   secondary_name: Disaster
 ....
 
+===== Create Failover/Failback Playbooks
+
 Now we can create the playbook that we will use to initiate the failover from our Primary site to our DR site:
 
 .failover.yml
@@ -158,9 +159,28 @@ Finally, the cleanup playbook. This is used to clean the Primary site up ready f
 
 == Failover
 
+To failover we need to ensure that the storage replication is stopped and is made read/write in the DR site. Once this is confirmed, we can run the Ansible playbook to failover.
+
+....
+ansible-playbook failover.yaml --tags fail_over --ask-vault-pass
+....
+
 == Cleanup and Failback
 
-== Demonstration
+Once the Primary site is brought back online we can begin the failback process. Storage now needs to be replicated from DR site back to Primary site. The primary site also needs to be cleaned to ensure storage domains are not imported.
+
+....
+ansible-playbook clean_primary.yml --tags clean_engine --ask-vault-pass
+....
+
+When ready, initiate the failback. The playbook will pause and wait for you to confirm that the storage replication has been stopped and that storage domains are now read/write in the Primary site.
+
+....
+ansible-playbook failback.yml --tags fail_back --ask-vault-pass
+....
+
+
+== Demo
 
 The following video demonstrates the failover process.
 
