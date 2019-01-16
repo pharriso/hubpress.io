@@ -1,6 +1,6 @@
 = RHV Disaster Recovery - Part II
 
-In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. In this part, we will look at the Active/Passive implementation in more detail including how to set it up and run it. You'll also find a recorded demo of the failover process.
+In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. In this part, we will look at the Active/Passive implementation in more detail, including how to set it up and run it. You'll also find a recorded demo of the failover process.
 
 == Overview
 
