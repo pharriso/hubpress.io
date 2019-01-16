@@ -4,7 +4,7 @@ In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-
 
 == Overview
 
-A quick recap on what was discussed in part one of this blog. The Active/Passive architecture allows us to fail Virtual Machines over to a Disaster Recovery site in the event of a failure in the Primary site. The solution also provides the necessary orchestration to failback to the Primary site when appropriate. We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery which are shipped as part of the RHV product. 
+A quick recap on what was discussed in part one of this blog. The Active/Passive architecture allows us to fail Virtual Machines over to a Disaster Recovery site in the event of a failure in the Primary site. The solution also provides the necessary orchestration to failback to the Primary site when appropriate. We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery which is shipped as part of the RHV product. 
 
 From an underlying infrastructure perspective, we obviously need some hypervisors in our DR site to fail the workloads onto. The DR site also needs it's own RHV Manager. We also rely on replicated storage between sites. The orchestration of the storage replication is not covered by the Ansible roles that are shipped with RHV. A storage administrator needs to setup the replication beforehand. They will also need to make the storage read/write in the secondary site at the point that DR is invoked. 
 
@@ -16,11 +16,11 @@ Once the Primary site is brought back online, it must be prepared. This is part 
 
 When ready, the failback playbook can be run. This stops the VM's in the DR site and removes the storage domains from the RHV Manager. The playbook then pauses and waits for the administrator to confirm that replication has been stopped and the storage is now read/write in the Primary site. Once confirmed, the playbook will import the storage domains at the Primary site, register the VM's and start them up. The final step is to ensure the storage replication is switched so that the Primary site is once again replicating to the DR site.
 
-== Lab Environment
+== Demo Environment
 
 I am using nested virtualisation for my lab. For the storage replication, I am using GlusterFS and geo-replication. This is asynchronous replication which is *not* recommended but it serves the purpose for this demo. 
 
-Each "site" has a RHV Manager. The RHV Manager is configured with a single cluster containing a singe RHV Host. I've got two small cirros VM's which I will failover in this demo.
+Each "site" has a RHV Manager. The RHV Manager is configured with a single cluster containing a singe RHV Host. I've got two small cirros VM's which I will failover in this demo. One is marked as Highly Available to demonstate the fact that HA VM's are started before standard VM's.
 
 
 == Setup
@@ -41,13 +41,13 @@ dr_sites_primary_password: Redhat123
 dr_sites_secondary_password: Redhat123
 ....
 
-Now encrypt the file and enter a password when prompted:
+Encrypt the file with ansible-vault to avoid leaving passwords in plaintext.
 
 ....
 ansible-vault encrypt password.yml
 ....
 
-Now we can create the playbook that will generate the mappings file for us. 
+Now we can create the playbook that will generate the mapping file for us. 
 
 .generate_mappings.yml
 [source]
@@ -77,7 +77,7 @@ Now run the playbook to generate the mapping variable file. This will log into t
 ansible-playbook generate_mappings.yml --tags generate_mapping --ask-vault-pass
 ....
 
-The file, disaster_recovery_vars.yml will be generated. This now needs to be edited to allow you to map components from the Primary site to the Disaster site. For example, the login details for the Disaster site:
+A file called disaster_recovery_vars.yml is generated. This needs to be edited to allow you to map components from the Primary site to the Disaster site. For example, the login details for the Disaster site:
 
 ....
 dr_sites_primary_url: https://rhvm-primary.example.com/ovirt-engine/api
@@ -140,7 +140,7 @@ And the failback playbook to allow us to failback to our Primary site once it ha
     - oVirt.disaster-recovery
 ....
 
-Finally, the cleanup playbook. This is used to clean the Primary site up ready for failback:
+Finally, the cleanup playbook. This is used to clean the Primary site ready for failback:
 
 .clean_primary.yml
 [source]
