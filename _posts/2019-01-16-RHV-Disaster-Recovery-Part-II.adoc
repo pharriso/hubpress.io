@@ -1,0 +1,152 @@
+= RHV Disaster Recovery - Part II
+
+In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. 
+
+In this part, we will look at the Active/Passive implementation in more detail. 
+
+== Overview
+
+We use ansible
+RPM with roles
+create mappings
+Need to switch storage replication
+
+== Lab Environment
+
+I am using nested virtualisation for my lab. I've got the following setup:
+
+== Setup
+
+_All of the files mentioned in this setup section are available in my github repo https://github.com/pharriso/rhv-dr[here]_
+
+*Don't worry. All of the below playbooks are fully documented in the Red Hat documentation for RHV DR*
+
+First create a variable file containing the passwords for the RHV manager. I'm creating a file called passwords.yml here with these contents:
+
+.passwords.yml
+[source]
+....
+---
+dr_sites_primary_password: Redhat123
+dr_sites_secondary_password: Redhat123
+....
+
+Now encrypt the file and enter a password when prompted:
+
+....
+ansible-vault encrypt password.yml
+....
+
+Now we can create the playbook that will generate the mappings file for us. 
+
+.generate_mappings.yml
+[source]
+....
+---
+- name: Generate mapping
+  hosts: localhost
+  connection: local
+
+  vars:
+    site: https://rhvm-primary.example.com/ovirt-engine/api
+    username: admin@internal
+    password: "{{ dr_sites_primary_password }}"
+    ca: /root/DR/primary_ca.pem
+    var_file: disaster_recovery_vars.yml
+
+  vars_files:
+    - passwords.yml
+
+  roles:
+    - oVirt.disaster-recovery
+....
+
+Now run the playbook to generate the mapping variable file. This will log into the RHV Manager at the Primary site and retrive details on components such as storage, networking and clusters.
+
+....
+ansible-playbook generate_mappings.yml --tags generate_mapping --ask-vault-pass
+....
+
+The file, disaster_recovery_vars.yml will be generated. This now needs to be edited to allow you to map components from the Primary site to the Disaster site. For example, the login details for the Disaster site:
+
+....
+dr_sites_primary_url: https://rhvm-primary.example.com/ovirt-engine/api
+dr_sites_primary_username: admin@internal
+dr_sites_primary_ca_file: /root/DR/primary_ca.pem
+
+# Please fill in the following properties for the secondary site:
+dr_sites_secondary_url:  https://rhvm-secondary.example.com/ovirt-engine/api
+dr_sites_secondary_username:  admin@internal
+dr_sites_secondary_ca_file: /etc/pki/ovirt-engine/ca.pem
+....
+
+And also the cluster mappings:
+
+....
+# Mapping for cluster
+dr_cluster_mappings:
+- primary_name: Primary
+  # Fill the correlated cluster name in the secondary site for cluster 'Primary'
+  secondary_name: Disaster
+....
+
+Now we can create the playbook that we will use to initiate the failover from our Primary site to our DR site:
+
+.failover.yml
+[source]
+....
+---
+- name: Failover RHV
+  hosts: localhost
+  connection: local
+  vars:
+    dr_target_host: secondary
+    dr_source_map: primary
+  vars_files:
+    - disaster_recovery_vars.yml
+    - passwords.yml
+  roles:
+    - oVirt.disaster-recovery
+....
+
+And the failback playbook to allow us to failback to our Primary site once it has been restored (The same playbook but with the source and target reversed):
+
+.failback.yml
+[source]
+....
+---
+- name: Failback RHV
+  hosts: localhost
+  connection: local
+  vars:
+    dr_target_host: primary
+    dr_source_map: secondary
+  vars_files:
+    - disaster_recovery_vars.yml
+    - passwords.yml
+  roles:
+    - oVirt.disaster-recovery
+....
+
+Finally, the cleanup playbook. This is used to clean the Primary site up ready for failback:
+
+.clean_primary.yml
+[source]
+....
+---
+- name: clean RHV
+  hosts: localhost
+  connection: local
+  vars:
+    dr_source_map: primary
+  vars_files:
+    - disaster_recovery_vars.yml
+  roles:
+    - oVirt.disaster-recovery
+....
+
+== Video Demonstration
+
+The following video demonstrates the failover process.
+
+video::OC66G7_y8Vo[youtube]
