@@ -1,16 +1,20 @@
 = RHV Disaster Recovery - Part II
 
-In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. 
-
-In this part, we will look at the Active/Passive implementation in more detail. 
+In https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html[part one] of this blog we looked at the different Disaster Recovery Solutions for RHV. In this part, we will look at the Active/Passive implementation in more detail. 
 
 == Overview
 
-As discussed in the part one of this blog, the Active/Passive architecture allows us to fail Virtual Machines over to a Disaster Recovery site in the event of a failure in the Primary site.
+A quick recap on what was discussed in part one of this blog. The Active/Passive architecture allows us to fail Virtual Machines over to a Disaster Recovery site in the event of a failure in the Primary site. The solution also provides the necessary orchestration to failback to the Primary site when appropriate. We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery which are shipped as part of the RHV product. 
 
-We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery which are shipped as part of the RHV product.
+From an underlying infrastructure perspective, we obviously need some hypervisors in our DR site to fail the workloads onto. The DR site also needs it's own RHV Manager. We also rely on replicated storage between sites. The orchestration of the storage replication is not covered by the Ansible roles that are shipped with RHV. A storage administrator needs to setup the replication beforehand. They will also need to make the storage read/write in the secondary site at the point that DR is invoked. 
 
-The first part of the process is generating variables file which maps entities from the Primary site to the DR site. For example, workloads in "Cluster1" in the Primary site should be failed over to "Cluster2" in my DR site.
+Let's take a high-level view of the DR process. In advance of the disaster, one must generate the mapping file which maps entities from the Primary site to the DR site. For example, workloads in "Cluster1" in the Primary site should be failed over to "Cluster2" in my DR site. This mapping file is used during the failover and failback process.
+
+In the event of a disaster, the storage must be made read/write in the DR site. The process for this will vary depending on the nature of the disaster and the type of storage. The "failover" Ansible playbook can then be run. This will mount the storage domains at the DR site. Virtual Machines are then registered and started. Any VM's marked as Highly Available are started first. 
+
+Once the Primary site is brought back online, it must be prepared. This is part of the "clean" Ansible playbook. Any replicated storage domains need to be removed from the RHV Manager. A storage administrator will need to ensure replication is now taking place from the DR site to the Primary site. 
+
+When ready, the failback playbook can be run. This stops the VM's in the DR site and removes the storage domains from the RHV Manager. The playbook then pauses and waits for the administrator to confirm that replication has been stopped and the storage is now read/write in the Primary site. Once confirmed, the playbook will import the storage domains at the Primary site, register the VM's and start them up. The final step is to ensure the storage replication is switched so that the Primary site is once again replicating to the DR site.
 
 
 
