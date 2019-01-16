@@ -71,7 +71,7 @@ Now we can create the playbook that will generate the mappings file for us.
     - oVirt.disaster-recovery
 ....
 
-Now run the playbook to generate the mapping variable file. This will log into the RHV Manager at the Primary site and retrive details on components such as storage, networking and clusters.
+Now run the playbook to generate the mapping variable file. This will log into the RHV Manager at the Primary site and retrieve details on components such as storage, networking and clusters.
 
 ....
 ansible-playbook generate_mappings.yml --tags generate_mapping --ask-vault-pass
