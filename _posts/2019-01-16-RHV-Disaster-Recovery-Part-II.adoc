@@ -6,14 +6,20 @@ In this part, we will look at the Active/Passive implementation in more detail.
 
 == Overview
 
-We use ansible
-RPM with roles
+As discussed in the part one of this blog, the Active/Passive architecture allows us to fail Virtual Machines over to a Disaster Recovery site in the event of a failure in the Primary site.
+
+We leverage the power of Ansible to orchestrate the failover. The necessary Ansible roles are provided in a rpm called ovirt-ansible-disaster-recovery
+
+
+
+
 create mappings
 Need to switch storage replication
 
 == Lab Environment
 
 I am using nested virtualisation for my lab. I've got the following setup:
+
 
 == Setup
 
