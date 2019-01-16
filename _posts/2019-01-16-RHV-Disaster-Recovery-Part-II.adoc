@@ -31,7 +31,7 @@ _All of the files mentioned in this setup section are available in my github rep
 
 *Don't worry. All of the below playbooks are fully documented in the Red Hat documentation for RHV DR.*
 
-===== Generate Mapping
+=== Generate Mapping
 
 First create a variable file containing the passwords for the RHV manager. I'm creating a file called passwords.yml here with these contents:
 
@@ -102,7 +102,7 @@ dr_cluster_mappings:
   secondary_name: Disaster
 ....
 
-===== Create Failover/Failback Playbooks
+=== Create Failover/Failback Playbooks
 
 Now we can create the playbook that we will use to initiate the failover from our Primary site to our DR site:
 
