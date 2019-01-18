@@ -20,7 +20,7 @@ When ready, the failback playbook can be run. This stops the VM's in the DR site
 
 I am using nested virtualisation for my lab. For the storage replication, I am using GlusterFS and geo-replication. This is asynchronous replication which is *not* recommended but it serves the purpose for this demo. Synchronous replication is recommended for replication between sites.
 
-Each "site" has a RHV Manager. The RHV Manager is configured with a single cluster containing a singe RHV Host. I've got two small cirros VM's which I will failover in this demo. One is marked as Highly Available to demonstate the fact that HA VM's are started before standard VM's.
+Each "site" has a RHV Manager. The RHV Manager is configured with a single cluster containing a singe RHV Host. I've got two small cirros VM's which I will failover in this demo. One is marked as Highly Available to demonstrate the fact that HA VM's are started before standard VM's.
 
 image::https://cloudautomation.pharriso.co.uk/images/RHV DR Active Passive Lab.png[]
 
