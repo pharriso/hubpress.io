@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I Currently working as a Solution Architect for Red Hat in the UK.]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Fri, 18 Jan 2019 13:12:15 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RHV Disaster Recovery - Part II]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I Currently working as a Solution Architect for Red Hat in the UK.]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 21 Jan 2019 19:32:57 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RHV Disaster Recovery - Part II]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In <a href="https://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html">part one</a> of this blog we looked at the different Disaster Recovery Solutions for RHV. In this part, we will look at the Active/Passive implementation in more detail, including how to set it up and run it. You&#8217;ll also find a recorded demo of the failover process.</p>
@@ -245,7 +245,7 @@ dr_cluster_mappings:
 </div>
 </div>
 </div>]]></description><link>http://cloudautomation.pharriso.co.uk/2019/01/16/RHV-Disaster-Recovery-Part-II.html</link><guid isPermaLink="true">http://cloudautomation.pharriso.co.uk/2019/01/16/RHV-Disaster-Recovery-Part-II.html</guid><pubDate>Wed, 16 Jan 2019 00:00:00 GMT</pubDate></item><item><title><![CDATA[Infrastructure Migration Solution]]></title><description><![CDATA[<div class="paragraph">
-<p>While VMware is undoubtedly a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containers is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.</p>
+<p>While VMware is undoubtedly a great virtualisation offering (I spent a number of users working with VMware tech) some customers are looking beyond traditional virtualisation. The growing adoption of containerisation is a great example of this and using RHV as a stepping stone to Container Native Virtualisation (CNV) is a good example use case.</p>
 </div>
 <div class="paragraph">
 <p>Other customers simply want to save costs and are looking at alternative virtualisation offerings. Whatever the reason for moving from VMware, we need a method for migrating workloads to RHV.</p>
@@ -280,13 +280,7 @@ dr_cluster_mappings:
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RHV 4.1 was released back in 2017 and we introduced an Active/Active implementation in which we effectively deploy a stretch cluster spanning two sites. With the release of RHV 4.2 in May 2018 we introduced additional disaster recovery capabilities. We can now deploy an Active/Passive architecture spanning two sites.</p>
-</div>
-<div class="paragraph">
-<p>In the event of a disaster we can failover VM&#8217;s from a Primary site to a Secondary DR site. We use the power of Ansible automation to achieve this. Once the issues with the primary site are resolved, we can then perform an automated failback to return our virtual machines to our primary site.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s take a look at the different implementation options.</p>
+<p>RHV 4.1 was released back in 2017 and we introduced an Active/Active implementation. With the release of RHV 4.2 in May 2018 we introduced additional disaster recovery capabilities. We can now deploy an Active/Passive architecture spanning two sites. Let&#8217;s take a look at the different implementation options.</p>
 </div>
 </div>
 </div>
@@ -294,7 +288,7 @@ dr_cluster_mappings:
 <h2 id="_active_active">Active/Active</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Active/Active architecture can span two sites. With this implementation we deploy a single RHV cluster with RHV hosts spanning both sites in a stretch cluster configuration. A single RHV Manager is responsible for managing both sites. The RHV Manager itself could be self hosted or standalone.</p>
+<p>The Active/Active architecture can span two sites. With this implementation we deploy a single RHV cluster with RHV hosts spanning both sites in a stretch cluster configuration. A single RHV Manager is responsible for managing both sites. The RHV Manager itself could be self hosted or standalone (self-hosted simply means the RHV Manager is a VM running on the hypervisors it is managing).</p>
 </div>
 <div class="paragraph">
 <p>As both sites are active at the same time and VM&#8217;s can effectively run at either site at any given time we require synchronously replicated storage that is writeable at both sites at the same time.</p>
@@ -309,7 +303,7 @@ dr_cluster_mappings:
 <p>The nice thing about the Active/Active setup is that we just rely on native RHV HA to fail VM&#8217;s between sites. It does rely on a storage array that can provide write access to both sites with replication. An example of this would be something like EMC VPLEX.</p>
 </div>
 <div class="paragraph">
-<p>Here is what an Active/Active configuration looks like.</p>
+<p>Here is what an Active/Active configuration looks like. This diagram depicts a the RHV manager as a self-hosted engine which is failed over along with the VM workloads.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -317,7 +311,7 @@ dr_cluster_mappings:
 </div>
 </div>
 <div class="paragraph">
-<p>In the event of a failure at the Primary site, any VM&#8217;s marked as highly available will automatically restart on RHV hosts in the DR site.</p>
+<p>In the event of a failure at the Primary site, any VM&#8217;s marked as highly available will automatically restart on RHV hosts in the DR site. Also, as the RHV Manager is self-hosted it is also restarted at the DR site.</p>
 </div>
 <div class="imageblock">
 <div class="content">

@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1547210926979" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1548099177228" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2019/01/08/RHV-Disaster-Recovery-Part-I.html" />
     <meta name="referrer" content="origin" />
@@ -108,13 +108,7 @@
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RHV 4.1 was released back in 2017 and we introduced an Active/Active implementation in which we effectively deploy a stretch cluster spanning two sites. With the release of RHV 4.2 in May 2018 we introduced additional disaster recovery capabilities. We can now deploy an Active/Passive architecture spanning two sites.</p>
-</div>
-<div class="paragraph">
-<p>In the event of a disaster we can failover VM&#8217;s from a Primary site to a Secondary DR site. We use the power of Ansible automation to achieve this. Once the issues with the primary site are resolved, we can then perform an automated failback to return our virtual machines to our primary site.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s take a look at the different implementation options.</p>
+<p>RHV 4.1 was released back in 2017 and we introduced an Active/Active implementation. With the release of RHV 4.2 in May 2018 we introduced additional disaster recovery capabilities. We can now deploy an Active/Passive architecture spanning two sites. Let&#8217;s take a look at the different implementation options.</p>
 </div>
 </div>
 </div>
@@ -122,7 +116,7 @@
 <h2 id="_active_active">Active/Active</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Active/Active architecture can span two sites. With this implementation we deploy a single RHV cluster with RHV hosts spanning both sites in a stretch cluster configuration. A single RHV Manager is responsible for managing both sites. The RHV Manager itself could be self hosted or standalone.</p>
+<p>The Active/Active architecture can span two sites. With this implementation we deploy a single RHV cluster with RHV hosts spanning both sites in a stretch cluster configuration. A single RHV Manager is responsible for managing both sites. The RHV Manager itself could be self hosted or standalone (self-hosted simply means the RHV Manager is a VM running on the hypervisors it is managing).</p>
 </div>
 <div class="paragraph">
 <p>As both sites are active at the same time and VM&#8217;s can effectively run at either site at any given time we require synchronously replicated storage that is writeable at both sites at the same time.</p>
@@ -137,7 +131,7 @@
 <p>The nice thing about the Active/Active setup is that we just rely on native RHV HA to fail VM&#8217;s between sites. It does rely on a storage array that can provide write access to both sites with replication. An example of this would be something like EMC VPLEX.</p>
 </div>
 <div class="paragraph">
-<p>Here is what an Active/Active configuration looks like.</p>
+<p>Here is what an Active/Active configuration looks like. This diagram depicts a the RHV manager as a self-hosted engine which is failed over along with the VM workloads.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -145,7 +139,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>In the event of a failure at the Primary site, any VM&#8217;s marked as highly available will automatically restart on RHV hosts in the DR site.</p>
+<p>In the event of a failure at the Primary site, any VM&#8217;s marked as highly available will automatically restart on RHV hosts in the DR site. Also, as the RHV Manager is self-hosted it is also restarted at the DR site.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -294,7 +288,7 @@
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1547210926979"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1548099177228"></script>
 
 
     <script>
