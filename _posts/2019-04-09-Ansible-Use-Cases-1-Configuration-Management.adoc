@@ -1,0 +1,22 @@
+= Ansible Use Cases - 1 Configuration Management
+
+One of the many reasons that Ansible has become so popular is the large number of use cases it can cover. I will try to cover some of the more common use cases - starting here with configuration management.
+
+
+What do I mean by configuration management?
+
+Standard examples 
+
+ntp, resolv.conf, kernel settings, 
+
+variables
+
+example roles 
+
+drift reporting
+
+how I handle this with external handler
+
+How I handle builds
+
+video
