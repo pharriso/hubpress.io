@@ -1,1 +1,16 @@
 = Scaling Ansible - Job slicing
+
+Customers managing 1000's of nodes
+
+Tower gives us many benefits including HA & Scaling
+
+Re-cap Tower capacity 
+
+Ansible forks
+
+New in 3.4 Slicing. prior to this we ran a playbook from a single host
+
+Show example screenshots where slicing used.
+
+Record video
+
