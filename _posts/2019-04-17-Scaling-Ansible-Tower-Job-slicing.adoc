@@ -10,7 +10,7 @@ Recap Tower HA
 
 == Calculating Capacity
 
-Ansible uses forks to determine how many hosts we automate against in parallel. By default 5 forks are spawned but we can override this if for example we are automating against a large number of hosts. 
+Ansible uses forks to determine how many hosts to automate against in parallel. By default 5 forks are spawned but we can override this if for example we are automating against a large number of hosts. 
 
 For Ansible Tower, we can calculate the number of available forks based on memory capacity or cpu capacity depending on the nature of the workload.
 
@@ -32,19 +32,15 @@ For cpu capacity we multiply the number of cpus by *fork_per_cpu* - which defaul
 
 For a Tower node with 4 cores:
 
-`4 * 4 = 16`
+`4 * 4 = 16` 
 
-*Somewhere between memory and cpu*
-
-
-
-If I were to run a job with more forks than the calculated capacity, then I run the risk of performance issues or running out of resources on our Tower nodes.
+If I were to run a job with more forks than the calculated capacity, then I run the risk of performance issues or running out of resources on my Tower nodes.
 
 == Job Slicing
 
-When a job is launched in Ansible Tower, it is executed on a single Tower node in the cluster. So effectively, ansible-playbook is run from a single node. If we are executing a playbook across a large number of hosts then we are not making use of all of the available capacity in our Ansible Tower cluster.
+When a job is launched in Ansible Tower, it is executed on a single Tower node in the cluster. So effectively, ansible-playbook is run from a single node. This means that a job is limited to the number of forks on a single Tower node. If we are executing a playbook across a large number of hosts then we are not making use of all of the available capacity in our Ansible Tower cluster.
 
-Job slicing is a new feature of Ansible Tower 3.4 and helps to address this issue. Job slicing allows us to distribute a job across multiple Tower nodes. 
+Job slicing is a new feature of Ansible Tower 3.4 and helps to address this issue. Job slicing allows us to distribute a job across multiple Tower nodes. It does this by effictively ssplitting the inventory into slices and 
 
 Show example screenshots where slicing used.
 
