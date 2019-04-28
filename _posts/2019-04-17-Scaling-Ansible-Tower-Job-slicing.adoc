@@ -44,16 +44,21 @@ Job slicing is a new feature of Ansible Tower 3.4 and helps to address this issu
 
 == Using job slices
 
-I have a three node Tower cluster to demonstrate job slicing. Here are the available job slices reported by my Tower hosts. 
+I have a three node Tower cluster and 49 hosts in my inventory for me to automate against. Here is the available capacity in forks reported by my Tower hosts. 
 
 image::https://cloudautomation.pharriso.co.uk/images/tower slice/tower capacity.png[]
 
-My Tower hosts can each spawn up to 27 forks based on memory capacity. If we look at my job template we can see that I have specified 30 forks - I run the risk of exhausting memory resources on my Tower node. Also note that I only have one job slice configured - this is the default when creating a new job template. When I launch my job we can see that my playbook is being run on a single Tower node. As I have allocated more forks than I safely have capacity for I am over-allocated on capacity. My other two Tower nodes are just sat there relaxing.
+My Tower hosts can each spawn up to 27 forks based on memory capacity. If we look at the following job template we can see that I have specified 30 forks - I run the risk of exhausting memory resources on my Tower node. Also note that I only have one job slice configured - this is the default when creating a new job template. 
+
+image::https://cloudautomation.pharriso.co.uk/images/tower slice/job template 1 slice.png[]
+
+When I launch my job we can see that my playbook is being run on a single Tower node. As I have allocated more forks than I safely have capacity for I am over-allocated on capacity. My other two Tower nodes are just sat there relaxing.
 
 image::https://cloudautomation.pharriso.co.uk/images/tower slice/1 slice capacity.png[]
 
 Now I'll re-configure my job template so that it utilises three slices.
 
+image::https://cloudautomation.pharriso.co.uk/images/tower slice/job template 3 slices.png[]
 
 This time when I launch my job template, a worklfow is automatically generated. 
 
