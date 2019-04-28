@@ -1,8 +1,6 @@
 = Scaling Ansible Tower - Job slicing
 
-Ansible Tower gives us a 
 
-Tower gives us many benefits including HA & Scaling
 
 == Tower HA
 
