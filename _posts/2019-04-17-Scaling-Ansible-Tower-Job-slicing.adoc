@@ -1,6 +1,14 @@
 = Scaling Ansible Tower - Job slicing
 
-Ansible Tower is a centralised platform for running and controlling your Ansible automation. It provides a number of essential key features for running Ansible in the enterprise such as role-based access control, inventory & credential management, auditing & logging, high availability clustering and scaling. Job slicing is a scale-out feature that was introduced in Ansible Tower 3.4 which allows us to run jobs that are distributed across our Ansible Tower cluster. Before we look at job slicing let's quickly look at Tower clustering.
+Ansible Tower is a centralised platform for running and controlling your Ansible automation. It provides a number of key features for running Ansible in the enterprise.
+
+* role-based access control
+* inventory management
+* credential management
+* auditing & logging
+* clustering & scale-out 
+
+ob slicing is a scale-out feature that was introduced in Ansible Tower 3.4 which allows us to run jobs that are distributed across our Ansible Tower cluster. Before we look at job slicing let's quickly look at Tower clustering.
 
 == Ansible Tower clustering
 
