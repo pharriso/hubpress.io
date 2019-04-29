@@ -8,11 +8,11 @@ Ansible Tower is a centralised platform for running and controlling your Ansible
 * auditing & logging
 * clustering & scale-out 
 
-ob slicing is a scale-out feature that was introduced in Ansible Tower 3.4 which allows us to run jobs that are distributed across our Ansible Tower cluster. Before we look at job slicing let's quickly look at Tower clustering.
+Job slicing is a new scale-out feature that was introduced in Ansible Tower 3.4 which allows us to run jobs that are distributed across our Ansible Tower cluster. Before we look at job slicing let's quickly look at Tower clustering.
 
 == Ansible Tower clustering
 
-Ansible Tower can be installed in a cluster to provide a highly available platform for running Ansible. Ansible Tower provides scale-out capabilities as different jobs are scheduled across Tower nodes to ensure they are sharing the load. However, each individual job is run on a single Tower node only. If I run a job against 1000 servers then a single Tower node runs this job and it must have enough capacity to run this job. Let's look at how we calculate capacity in Ansible Tower.
+Ansible Tower can be installed in a cluster to provide a highly available platform for running Ansible. Ansible Tower provides scale-out capabilities as different jobs are scheduled across Tower nodes to ensure they are sharing the load. However, each individual job is run on a single Tower node only. If I run a job against 1000 servers then a single Tower node runs this job and it must have enough capacity to handle this job. Let's look at how we calculate capacity in Ansible Tower.
 
 == Calculating Capacity
 
