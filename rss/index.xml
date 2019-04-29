@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 29 Apr 2019 10:04:41 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Scaling Ansible Tower - Job slicing]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 29 Apr 2019 14:02:26 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Scaling Ansible Tower - Job slicing]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ansible Tower is a centralised platform for running and controlling your Ansible automation. It provides a number of key features for running Ansible in the enterprise.</p>
@@ -6,24 +6,24 @@
 <div class="ulist">
 <ul>
 <li>
-<p>role-based access control</p>
+<p>Role-Based Access Control</p>
 </li>
 <li>
-<p>inventory management</p>
+<p>Inventory Management</p>
 </li>
 <li>
-<p>credential management</p>
+<p>Credential Management</p>
 </li>
 <li>
-<p>auditing &amp; logging</p>
+<p>Auditing &amp; Logging</p>
 </li>
 <li>
-<p>clustering &amp; scale-out</p>
+<p>Clustering &amp; Scale-Out</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Job slicing is a new scale-out feature that was introduced in Ansible Tower 3.4 which allows us to run jobs that are distributed across our Ansible Tower cluster. Before we look at job slicing let&#8217;s quickly look at Tower clustering and job distribution in a cluster.</p>
+<p>Job slicing is a new scale-out feature that was introduced in Ansible Tower 3.4 which allows us to run jobs that are distributed across our Ansible Tower cluster. Before we look at job slicing let&#8217;s quickly look at  clustering and job distribution within a cluster.</p>
 </div>
 </div>
 </div>
@@ -31,7 +31,7 @@
 <h2 id="_ansible_tower_clustering">Ansible Tower clustering</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ansible Tower can be installed in a cluster to provide a highly available platform for running Ansible. Ansible Tower provides scale-out capabilities in that different jobs are scheduled across Tower nodes to ensure they are sharing the load. However, each individual job is run on a single Tower node only. If I run a job against 1000&#8217;s of servers then a single Tower node runs this job and it must have enough capacity to run this job in a timely fashion. Let&#8217;s look at how we calculate concurrency and capacity in Ansible Tower.</p>
+<p>Ansible Tower can be installed in a cluster to provide a highly available platform for running Ansible. A clustered install provides scale-out capabilities in that different jobs are scheduled across Tower nodes to ensure they are sharing the load. However, each individual job is run on a single Tower node only. If I run a job against 1000&#8217;s of servers then a single Tower node runs this job and it must have enough capacity to run this job in a timely fashion. Let&#8217;s look at how we calculate concurrency and capacity in Ansible Tower.</p>
 </div>
 </div>
 </div>
@@ -42,7 +42,7 @@
 <p>Ansible uses forks to determine how many hosts to automate against in parallel. By default 5 forks are spawned but we can override this if we are automating against a large number of hosts. For example, I may run a configuration management playbook every 1 hour to ensure my hosts are in a desired state. If I run that playbook against 1000&#8217;s of nodes with only 5 forks then this will take some time to complete.</p>
 </div>
 <div class="paragraph">
-<p>For Ansible Tower, we can calculate the number of available forks based on memory capacity or cpu capacity depending on the nature of the workload.</p>
+<p>We can calculate the number of available forks based on memory capacity or cpu capacity depending on the nature of the workload.</p>
 </div>
 <div class="paragraph">
 <p><strong>memory capacity</strong></p>
@@ -83,7 +83,7 @@
 <h2 id="_job_slicing">Job Slicing</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As previously mentioned, when a job is launched in Ansible Tower, it is executed on a single Tower node in the cluster. So effectively, ansible-playbook is run from a single node. This means that a job is limited to the number of forks on a single Tower node. If we are executing a playbook across a large number of hosts then we are not making use of all of the available capacity in our Ansible Tower cluster.</p>
+<p>As previously mentioned, when a job is launched in Ansible Tower, it is executed on a single node in the cluster. So effectively, ansible-playbook is run from a single node. This means that a job is limited to the number of forks on a single Tower node. If we are executing a playbook across a large number of hosts then we are not making use of all of the available capacity in our cluster.</p>
 </div>
 <div class="paragraph">
 <p>Job slicing is a new feature of Ansible Tower 3.4 and helps to address this issue. Job slicing allows us to distribute a job across multiple Tower nodes. It does this by splitting the inventory into slices. A workflow is then created for us with multiple instances of our job being run on each slice of our inventory. For example, if I have 30 nodes in my inventory and I decide to create 3 slices then a workflow is created with three jobs - each being executed on 10 nodes in parallel. Obviously, I need 3 Tower nodes in this example so that my three job slices can be executed across the three hosts.</p>
@@ -94,7 +94,7 @@
 <h2 id="_using_job_slices">Using job slices</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To demonstrate job slicing, I have a three node Tower cluster. My inventory contains 49 hosts for me to automate against. Here is the available capacity in forks reported by my Tower hosts.</p>
+<p>To demonstrate job slicing, I have a three node Tower cluster. My inventory contains 49 hosts for me to automate against. Here is the available capacity in forks reported by my hosts.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -102,7 +102,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>My Tower hosts can each safely spawn up to 27 forks based on memory capacity. If we look at the following job template we can see that I have specified 30 forks - I run the risk of exhausting memory resources on my Tower node. Also note that I only have one job slice configured - this is the default when creating a new job template.</p>
+<p>My Tower hosts can each safely spawn up to 27 forks based on memory capacity. If we look at the following job template we can see that I have specified 30 forks - I run the risk of exhausting memory resources. Also note that I only have one job slice configured - this is the default when creating a new job template.</p>
 </div>
 <div class="imageblock">
 <div class="content">
