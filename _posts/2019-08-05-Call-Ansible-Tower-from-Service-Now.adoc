@@ -2,3 +2,35 @@
 
 
 In this post we will look at how we can call Ansible Tower from ServiceNow as part of a catalog request. This use case allows us to hand off automation capabilities to end users whilst allowing them to consume from.
+
+=== ServiceNow Outbound REST Message
+
+First we need to configure an Outbound REST message in ServiceNow to define how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower. This is especially useful if we want to prompt the user for information in the ServiceNow Service Catalog that will be passed into the Automation execution. 
+
+In ServiceNow, navigate to *System Web Services -> Outbound -> REST Message* and click *New*.
+
+Enter a name and the URL for the REST endpoint. This should be your Ansible Tower URL with the job ID that you want to launch.
+
+image::https://cloudautomation.pharriso.co.uk/images/snow_rest_name.png[]
+
+Set the *Authentication type* to *basic* and then click on the magnifying glass next to *Basic Auth profile*. Click *New* and enter a name for credential & the username and password to authenticate to Tower.
+
+image::https://cloudautomation.pharriso.co.uk/images/snow_cred.png[]
+
+Next set the Content-Type by selecting the *HTTP Request* tab and then adding a new *HTTP Header*.
+
+image::https://cloudautomation.pharriso.co.uk/images/snow_endpoint_http_request.png[]
+
+As mentioned earlier, I want to pass variables from ServiceNow to Ansible Tower so I can use them during in my automation. To do this, I need to add some content to the HTTP Post. Under *HTTP Methods* click *New* and add the details for our POST Request.  The *HTTP Method* needs to be *POST* and the *Endpoint* needs to be the url for the job we are launching.
+
+image::https://cloudautomation.pharriso.co.uk/images/snow_post.png[]
+
+Now under the *HTTP Request* tab, add a new *HTTP Query Parameter* with a *Name* of *Content* and a *Value* which contains the variable data I will pass to Tower. In my example - 
+
+....
+{"extra_vars": { "member_name": "${f5_member}", "snow_request": "${snow_request}", "member_state": "${f5_member_state}" } }
+....
+
+
+
+
