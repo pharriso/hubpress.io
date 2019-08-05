@@ -47,7 +47,24 @@ The *HTTP Query Parameter* should look as follows.
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_extra_vars.png[]
 
+Now we have defined how ServiceNow will make an API call to Ansible Tower. We need to create a workflow next to define how this API call will be triggered.
+
 === ServiceNow Workflow
+
+In ServiceNow, navigate to *Workflow -> Editor*. Select *New Workflow*. Name the workflow and set the table to *Requested Item [sc_req_item]*. Press submit and you will be taken into the workflow design canvas.
+
+image::https://cloudautomation.pharriso.co.uk/images/snow_extra_vars.png[]
+
+Delete the connector between Begin and End. Then Select the *Core* tab in the right hand pane. Under *Utilities*, drag the *Run Script* object onto the workflow canvas.
+
+
+Workflow design - select core and dragt across utilities -> run script
+
+Give it a name and paste script
+
+Delete line between begin and end (click on it and press delete key)
+
+
 
 === ServiceNow Service Catalog
 
