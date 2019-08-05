@@ -61,10 +61,10 @@ Delete the connector between Begin and End. Then Select the *Core* tab in the ri
 
 ----
 try { 
- var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job'); \\ <1>
- r.setStringParameterNoEscape('f5_member', current.variables.f5_member); \\ <2>
+ var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job'); <1>
+ r.setStringParameterNoEscape('f5_member', current.variables.f5_member);  <2>
  r.setStringParameterNoEscape('f5_member_state', current.variables.f5_member_state);
- r.setStringParameterNoEscape('snow_request', current.request.number); <3>
+ r.setStringParameterNoEscape('snow_request', current.request.number);  <3>
 
  var response = r.execute();
  var responseBody = response.getBody();
