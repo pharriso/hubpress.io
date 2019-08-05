@@ -3,6 +3,10 @@
 
 In this post we will look at how we can call Ansible Tower from ServiceNow as part of a catalog request. This use case allows us to hand off automation capabilities to end users whilst allowing them to consume from.
 
+=== Ansible Tower Job Template
+
+
+
 === ServiceNow Outbound REST Message
 
 First we need to configure an Outbound REST message in ServiceNow to define how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower. This is especially useful if we want to prompt the user for information in the ServiceNow Service Catalog that will be passed into the Automation execution. 
@@ -34,5 +38,30 @@ Now under the *HTTP Request* tab, add a new *HTTP Query Parameter* with a *Name*
 The *HTTP Query Parameter* should look as follows.
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_extra_vars.png[]
+
+=== ServiceNow Workflow
+
+=== ServiceNow Service Catalog
+
+Now that we have defined out outbound REST call and our workflow, we can add a Service Catalog item to expose this to end users. In ServiceNow, navigate to *Service Catalog -> Catalog Definitions -> Maintain Items*. Click on *New* and enter a name for the Service Catalog item. In the *Process Engine* tab, search for your workflow.
+
+image::https://cloudautomation.pharriso.co.uk/images/snow_service_request_workflow.png[]
+
+New
+
+Name
+
+Process engine - select workflow
+
+if you want to ask for vars and inject
+
+Variables - new
+
+Enter question and var name. Select type e.g. multichoice or text
+
+for multi choice add question choices
+
+
+
 
 
