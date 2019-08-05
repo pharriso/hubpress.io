@@ -5,7 +5,7 @@ In this post we will look at how we can call Ansible Tower from ServiceNow as pa
 
 In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. This input from the user needs to be passed into Ansible Tower as extra variables so that the automation job can run succesfully. 
 
-*NOTE* I am not a ServiceNow developer and this is definitely not a tutorial in how to use ServiceNow. 
+*NOTE* I am not a ServiceNow developer and this is definitely not a tutorial in how best to use ServiceNow. This is something that I had to work out for a demo around Ansible Tower.
 
 === Ansible Tower Job Template
 
