@@ -5,6 +5,8 @@ In this post we will look at how we can call Ansible Tower from ServiceNow as pa
 
 In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. This input from the user needs to be passed into Ansible Tower as extra variables so that the automation job can run succesfully. 
 
+*NOTE* I am not a ServiceNow developer and this is definitely not a tutorial in how to use ServiceNow. 
+
 === Ansible Tower Job Template
 
 In Ansible Tower, I already have my job template defined. Make a note of the job ID which is displayed in the URL. In the following example, the job ID is 10 - https://tower.example.com/#/templates/job_template/10
@@ -57,9 +59,9 @@ image::https://cloudautomation.pharriso.co.uk/images/snow_workflow_name.png[]
 
 Delete the connector between Begin and End. Then Select the *Core* tab in the right hand pane. Under *Utilities*, drag the *Run Script* object onto the workflow canvas. Name the script and then paste the script contents in.
 
-```
+----
 try { 
- var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job');
+ var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job'); 
  r.setStringParameterNoEscape('f5_member', current.variables.f5_member);
  r.setStringParameterNoEscape('f5_member_state', current.variables.f5_member_state);
  r.setStringParameterNoEscape('snow_request', current.request.number);
@@ -72,12 +74,12 @@ catch(ex) {
  var message = ex.message;
 }
 
-```
+----
 
 
 
 
-Delete line between begin and end (click on it and press delete key)
+
 
 
 
