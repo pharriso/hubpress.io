@@ -61,10 +61,10 @@ Delete the connector between Begin and End. Then Select the *Core* tab in the ri
 
 ----
 try { 
- var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job'); 
- r.setStringParameterNoEscape('f5_member', current.variables.f5_member);
+ var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job'); \\ <1>
+ r.setStringParameterNoEscape('f5_member', current.variables.f5_member); \\ <2>
  r.setStringParameterNoEscape('f5_member_state', current.variables.f5_member_state);
- r.setStringParameterNoEscape('snow_request', current.request.number);
+ r.setStringParameterNoEscape('snow_request', current.request.number); <3>
 
  var response = r.execute();
  var responseBody = response.getBody();
@@ -76,7 +76,9 @@ catch(ex) {
 
 ----
 
-Let's take a look a the interesting lines here. 
+<1> The name of the Outbound REST Message and HTTP Method name.
+<2> Example variable that will be passed from Catalog request.
+<3> Will pass the request number that is created by the user as a variable called *snow_request*
 
 Now let's drag an approval task onto our workflow. Again, in the *Core* tab, drag the *Approval User* or *Approval Group* item across. Name the approval step and select the user or group that needs to approve. 
 
