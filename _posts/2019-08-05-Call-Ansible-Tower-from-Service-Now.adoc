@@ -47,10 +47,15 @@ Now that we have defined out outbound REST call and our workflow, we can add a S
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_service_request_workflow.png[]
 
+Now we can define the information we want to prompt the user for which will be passed to Ansible Tower as variables. Within your Catalog Item, navigate to the *Variables* tab at the bottom of the screen. Click *New* to define a new variable.
 
-if you want to ask for vars and inject
+Select the question *Type* e.g. single line text or multi-choice. Then enter the question you want the user to see in the Catalog item in the *Question* field. In the *Name* field, enter the name of the variable that you want to pass to Tower.
 
-Variables - new
+image::https://cloudautomation.pharriso.co.uk/images/snow_sc_var.png[]
+
+For multi-choice variables, you need to add *Question Choices* at the bottom of this screen. The *Text* being what you want the user to see on the form and the *Value* being the value of the variable that will be passed to Tower.
+
+
 
 Enter question and var name. Select type e.g. multichoice or text
 
