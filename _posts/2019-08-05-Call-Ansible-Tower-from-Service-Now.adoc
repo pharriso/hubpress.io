@@ -76,10 +76,13 @@ catch(ex) {
 
 ----
 
+Let's take a look a the interesting lines here. 
 
+Now let's drag an approval task onto our workflow. Again, in the *Core* tab, drag the *Approval User* or *Approval Group* item across. Name the approval step and select the user or group that needs to approve. 
 
+Finally, let's connect our workflow up. Drag from small orange box inside *Begin* to your *Approval* task. Then drag from *Approved* to our *Run Script*. Then drag from *Rejected* to *End*. Lastly, drag from the *Script* to *End*. The flow should look as follows. 
 
-
+image::https://cloudautomation.pharriso.co.uk/images/snow_workflow_image.png[]
 
 
 
