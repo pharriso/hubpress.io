@@ -90,7 +90,7 @@ image::https://cloudautomation.pharriso.co.uk/images/snow_workflow_image.png[]
 
 === ServiceNow Service Catalog
 
-Now that we have defined out outbound REST call and our workflow, we can add a Service Catalog item to expose this to end users. In ServiceNow, navigate to *Service Catalog -> Catalog Definitions -> Maintain Items*. Click on *New* and enter a name for the Service Catalog item. In the *Process Engine* tab, search for your workflow.
+Now that we have defined out outbound REST call and our workflow, we can add a Service Catalog item to expose this to end users. In ServiceNow, navigate to *Service Catalog -> Catalog Definitions -> Maintain Items*. Click on *New* and enter a name for the Service Catalog item. Select the *Catalogs* you want the item to appear in. I have just selected *Service Catalog* for this example. Then in the *Process Engine* tab, search for your workflow.
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_service_request_workflow.png[]
 
