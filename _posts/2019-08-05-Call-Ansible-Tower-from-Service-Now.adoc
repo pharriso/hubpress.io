@@ -7,15 +7,15 @@ In this example, I have a job template in Ansible Tower that will manage the mem
 
 === Ansible Tower Job Template
 
-In Ansible Tower, I already have my job template defined. Make a note of the job ID which is displayed in the URL. For example, in the following example, the job ID is 10 - https://tower.example.com/#/templates/job_template/10
+In Ansible Tower, I already have my job template defined. Make a note of the job ID which is displayed in the URL. In the following example, the job ID is 10 - https://tower.example.com/#/templates/job_template/10
 
-To allow extra variables to be passed into the job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot below. 
+To allow extra variables to be passed into the Ansibe job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot below. 
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_tower_job_template.png[]
 
 === ServiceNow Outbound REST Message
 
-First we need to configure an Outbound REST message in ServiceNow to define how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower.  
+The first thing we need to configure in ServiceNow, is an Outbound REST message. This defines how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower.  
 
 In ServiceNow, navigate to *System Web Services -> Outbound -> REST Message* and click *New*.
 
