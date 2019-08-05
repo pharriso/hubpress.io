@@ -47,11 +47,6 @@ Now that we have defined out outbound REST call and our workflow, we can add a S
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_service_request_workflow.png[]
 
-New
-
-Name
-
-Process engine - select workflow
 
 if you want to ask for vars and inject
 
