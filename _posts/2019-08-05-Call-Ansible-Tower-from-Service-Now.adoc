@@ -7,7 +7,9 @@ In this example, I have a job template in Ansible Tower that will manage the mem
 
 === Ansible Tower Job Template
 
-In Ansible Tower, I already have my job template defined. To allow extra variables to be passed into the job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot. 
+In Ansible Tower, I already have my job template defined. Make a note of the job ID which is displayed in the URL. For example, in the following example, the job ID is 10 - https://tower.example.com/#/templates/job_template/10
+
+To allow extra variables to be passed into the job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot below. 
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_tower_job_template.png[]
 
