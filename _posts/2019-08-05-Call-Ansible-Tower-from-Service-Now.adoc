@@ -1,15 +1,19 @@
 = Call Ansible Tower from ServiceNow
 
 
-In this post we will look at how we can call Ansible Tower from ServiceNow as part of a catalog request. This use case allows us to hand off automation capabilities to end users whilst allowing them to consume from.
+In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. This use case allows us to hand off automation capabilities to end users whilst going through approval processes in ServiceNow.
+
+In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. This input from the user needs to be passed into Ansible Tower as extra variables so that the automation job can run succesfully. 
 
 === Ansible Tower Job Template
+
+In Ansible Tower, I already have my job template defined. To allow extra variables to be passed into the job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot. 
 
 
 
 === ServiceNow Outbound REST Message
 
-First we need to configure an Outbound REST message in ServiceNow to define how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower. This is especially useful if we want to prompt the user for information in the ServiceNow Service Catalog that will be passed into the Automation execution. 
+First we need to configure an Outbound REST message in ServiceNow to define how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower.  
 
 In ServiceNow, navigate to *System Web Services -> Outbound -> REST Message* and click *New*.
 
