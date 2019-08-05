@@ -31,6 +31,8 @@ Now under the *HTTP Request* tab, add a new *HTTP Query Parameter* with a *Name*
 {"extra_vars": { "member_name": "${f5_member}", "snow_request": "${snow_request}", "member_state": "${f5_member_state}" } }
 ....
 
+The *HTTP Query Parameter* should look as follows.
 
+image::https://cloudautomation.pharriso.co.uk/images/snow_extra_vars.png[]
 
 
