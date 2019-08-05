@@ -31,15 +31,17 @@ Next set the Content-Type by selecting the *HTTP Request* tab and then adding a 
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_endpoint_http_request.png[]
 
-As mentioned earlier, I want to pass variables from ServiceNow to Ansible Tower so I can use them during in my automation. To do this, I need to add some content to the HTTP Post. Under *HTTP Methods* click *New* and add the details for our POST Request.  The *HTTP Method* needs to be *POST* and the *Endpoint* needs to be the url for the job we are launching.
+Click submit and then go back into your REST Message. As mentioned earlier, I want to pass variables from ServiceNow to Ansible Tower so I can use them in my Ansible automation. To do this, I need to add some content to the HTTP Post. Under *HTTP Methods* click *New* and add the details for our POST Request.  The *HTTP Method* needs to be *POST* and the *Endpoint* needs to be the url for the job we are launching.
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_post.png[]
 
-Now under the *HTTP Request* tab, add a new *HTTP Query Parameter* with a *Name* of *Content* and a *Value* which contains the variable data I will pass to Tower. In my example - 
+Now under the *HTTP Request* tab, add a new *HTTP Query Parameter* with a *Name* of *Content* and a *Value* which contains the variable data I will pass to Tower. In my example:
 
 ....
 {"extra_vars": { "member_name": "${f5_member}", "snow_request": "${snow_request}", "member_state": "${f5_member_state}" } }
 ....
+
+Note the *${snow_request}* variable here. We will come back to that later.
 
 The *HTTP Query Parameter* should look as follows.
 
