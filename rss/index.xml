@@ -1,4 +1,218 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 01 May 2019 08:16:41 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Scaling Ansible Tower - Job slicing]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 06 Aug 2019 13:25:18 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Call Ansible Tower from ServiceNow]]></title><description><![CDATA[<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. This input then needs to be passed into Ansible Tower as extra variables so that the automation job can run succesfully.</p>
+</div>
+<div class="paragraph">
+<p>This integration allows us to use Tower for what it does best - provide the enterprise platform for executing our Ansible playbooks. We can leave Tower to manage credentials, provide RBAC and capture the audit history. At the same time we can leverage existing process in ServiceNow like approval processes and general change management workflows.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE</strong> I am not a ServiceNow developer and this is definitely not a tutorial in how best to use ServiceNow. This is something that I had to work out for a demo around Ansible Tower.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ansible_tower_job_template">Ansible Tower Job Template</h3>
+<div class="paragraph">
+<p>I already have my <a href="https://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html">job template</a> defined in Ansible Tower. Make a note of the job ID which is displayed in the URL when you click on the Job Template in Tower. For example the job ID is 10 in this URL - <a href="https://tower.example.com/#/templates/job_template/10" class="bare">https://tower.example.com/#/templates/job_template/10</a></p>
+</div>
+<div class="paragraph">
+<p>To allow extra variables to be passed into the Ansibe job execution, I need to enable <strong>Prompt on launch</strong> for <strong>extra variables</strong> as per the screenshot below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_tower_job_template.png" alt="snow tower job template">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_servicenow_outbound_rest_message">ServiceNow Outbound REST Message</h3>
+<div class="paragraph">
+<p>The first thing we need to configure in ServiceNow, is an Outbound REST message. This defines how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower.</p>
+</div>
+<div class="paragraph">
+<p>In ServiceNow, navigate to <strong>System Web Services &#8594; Outbound &#8594; REST Message</strong> and click <strong>New</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Enter a name and the URL for the REST endpoint. This should be your Ansible Tower URL with the job ID that you want to launch.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_rest_name.png" alt="snow rest name">
+</div>
+</div>
+<div class="paragraph">
+<p>Set the <strong>Authentication type</strong> to <strong>basic</strong> and then click on the magnifying glass next to <strong>Basic Auth profile</strong>. Click <strong>New</strong> and enter a name for credential &amp; the username and password to authenticate to Tower.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_cred.png" alt="snow cred">
+</div>
+</div>
+<div class="paragraph">
+<p>Next set the Content-Type by selecting the <strong>HTTP Request</strong> tab and then adding a new <strong>HTTP Header</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_endpoint_http_request.png" alt="snow endpoint http request">
+</div>
+</div>
+<div class="paragraph">
+<p>Click submit and then go back into your REST Message. As mentioned earlier, I want to pass variables from ServiceNow to Ansible Tower so I can use them in my Ansible automation. To do this, I need to add some content to the HTTP Post. Under <strong>HTTP Methods</strong> click <strong>New</strong> and add the details for our POST Request.  The <strong>HTTP Method</strong> needs to be <strong>POST</strong> and the <strong>Endpoint</strong> needs to be the url for the job we are launching.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_post.png" alt="snow post">
+</div>
+</div>
+<div class="paragraph">
+<p>Now under the <strong>HTTP Request</strong> tab, add a new <strong>HTTP Query Parameter</strong> with a <strong>Name</strong> of <strong>Content</strong> and a <strong>Value</strong> which contains the variable data I will pass to Tower. In my example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{"extra_vars": { "member_name": "${f5_member}", "snow_request": "${snow_request}", "member_state": "${f5_member_state}" } }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the <strong>${snow_request}</strong> variable here. We will come back to that later.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>HTTP Query Parameter</strong> should look as follows.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_extra_vars.png" alt="snow extra vars">
+</div>
+</div>
+<div class="paragraph">
+<p>Now we have defined how ServiceNow will make an API call to Ansible Tower. We need to create a workflow to define how this API call will be triggered.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_servicenow_workflow">ServiceNow Workflow</h3>
+<div class="paragraph">
+<p>In ServiceNow, navigate to <strong>Workflow &#8594; Editor</strong>. Select <strong>New Workflow</strong>. Name the workflow and set the table to <strong>Requested Item [sc_req_item]</strong>. Press submit and you will be taken into the workflow design canvas.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_workflow_name.png" alt="snow workflow name">
+</div>
+</div>
+<div class="paragraph">
+<p>Delete the connector between Begin and End. Then Select the <strong>Core</strong> tab in the right hand pane. Under <strong>Utilities</strong>, drag the <strong>Run Script</strong> object onto the workflow canvas. Name the script and then paste the script contents in.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>try {
+ var r = new sn_ws.RESTMessageV2('Tower Job Launch', 'F5 Member Job'); <i class="conum" data-value="1"></i><b>(1)</b>
+ r.setStringParameterNoEscape('f5_member', current.variables.f5_member);  <i class="conum" data-value="2"></i><b>(2)</b>
+ r.setStringParameterNoEscape('f5_member_state', current.variables.f5_member_state);
+ r.setStringParameterNoEscape('snow_request', current.request.number);  <i class="conum" data-value="3"></i><b>(3)</b>
+
+ var response = r.execute();
+ var responseBody = response.getBody();
+ var httpStatus = response.getStatusCode();
+}
+catch(ex) {
+ var message = ex.message;
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The name of the Outbound REST Message and HTTP Method name.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Example variable that will be passed from Catalog request.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is a special var we are determining from the ServiceNow catalog request. We will pass the request number that is created by the user as a variable called <strong>snow_request</strong></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s drag an approval task onto our workflow. Again, in the <strong>Core</strong> tab, drag the <strong>Approval User</strong> or <strong>Approval Group</strong> item across. Name the approval step and select the user or group that needs to approve.</p>
+</div>
+<div class="paragraph">
+<p>Finally, let&#8217;s connect our workflow up. Drag from small orange box inside <strong>Begin</strong> to your <strong>Approval</strong> task. Then drag from <strong>Approved</strong> to our <strong>Run Script</strong>. Then drag from <strong>Rejected</strong> to <strong>End</strong>. Lastly, drag from the <strong>Script</strong> to <strong>End</strong>. The flow should look as follows.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_workflow_image.png" alt="snow workflow image">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_servicenow_service_catalog">ServiceNow Service Catalog</h3>
+<div class="paragraph">
+<p>Now that we have defined out outbound REST call and our workflow, we can add a Service Catalog item to expose this to end users. In ServiceNow, navigate to <strong>Service Catalog &#8594; Catalog Definitions &#8594; Maintain Items</strong>. Click on <strong>New</strong> and enter a name for the Service Catalog item. Select the <strong>Catalogs</strong> you want the item to appear in. I have just selected <strong>Service Catalog</strong> for this example. Then in the <strong>Process Engine</strong> tab, search for your workflow.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_service_request_workflow.png" alt="snow service request workflow">
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can define the information we want to prompt the user for which will be passed to Ansible Tower as variables. Within your Catalog Item, navigate to the <strong>Variables</strong> tab at the bottom of the screen. Click <strong>New</strong> to define a new variable.</p>
+</div>
+<div class="paragraph">
+<p>Select the question <strong>Type</strong> e.g. single line text or multi-choice. Then enter the question you want the user to see in the Catalog item in the <strong>Question</strong> field. In the <strong>Name</strong> field, enter the name of the variable that you want to pass to Tower.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_sc_var.png" alt="snow sc var">
+</div>
+</div>
+<div class="paragraph">
+<p>For multi-choice variables, you need to add <strong>Question Choices</strong> at the bottom of this screen. The <strong>Text</strong> being what you want the user to see on the form and the <strong>Value</strong> being the value of the variable that will be passed to Tower.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/snow_sc_question_choices.png" alt="snow sc question choices">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_executing_the_workflow">Executing the workflow</h3>
+<div class="paragraph">
+<p>So what should happen when we order this Catalog item?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>User orders Catalog Item. User is asked to input the name of the host they want to manage in the F5 Loadbalancer and set the state of the host (multi-choice)</p>
+</li>
+<li>
+<p>The request is raised and will await approval</p>
+</li>
+<li>
+<p>Once the request is approved ServiceNow will launch the playbook via the Tower API. The answers that the user provided to the Catalog item will be passed as variables to the Ansible Tower playbook. We will also pass the ServiceNow request number.</p>
+</li>
+<li>
+<p>Ansible will manage the host in the F5 loadbalancer pool as requested by the user.</p>
+</li>
+<li>
+<p>Ansible will update the ticket in ServiceNow and close the ticket.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_acknowledgements">Acknowledgements</h3>
+<div class="paragraph">
+<p>There were two excellent guides I used for this. I just wanted to piece the best bits from both guides together:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://liveaverage.com/blog/ansible-tower-and-servicenow-integration-in-10-minutes/" class="bare">https://liveaverage.com/blog/ansible-tower-and-servicenow-integration-in-10-minutes/</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/eanylin/ansible-lab/tree/master/servicenow_demo/" class="bare">https://github.com/eanylin/ansible-lab/tree/master/servicenow_demo/</a></p>
+</div>
+</div>]]></description><link>http://cloudautomation.pharriso.co.uk/2019/08/05/Call-Ansible-Tower-from-Service-Now.html</link><guid isPermaLink="true">http://cloudautomation.pharriso.co.uk/2019/08/05/Call-Ansible-Tower-from-Service-Now.html</guid><pubDate>Mon, 05 Aug 2019 00:00:00 GMT</pubDate></item><item><title><![CDATA[Scaling Ansible Tower - Job slicing]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ansible Tower is a centralised platform for running and controlling your Ansible automation. It provides a number of key features for running Ansible in the enterprise.</p>
