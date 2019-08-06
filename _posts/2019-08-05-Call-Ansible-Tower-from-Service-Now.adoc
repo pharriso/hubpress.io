@@ -9,9 +9,9 @@ This integration allows us to use Tower for what it does best - provide the ente
 
 === Ansible Tower Job Template
 
-I already have my https://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html[job template] defined in Ansible Tower. Make a note of the job ID which is displayed in the URL when you click on the Job Template in Tower. For example the job ID is 10 in this URL - https://tower.example.com/#/templates/job_template/10
+I already have my https://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html[job template] defined in Ansible Tower. Make a note of the job ID which is displayed in the URL when you click on the Job Template in Tower. For example the job ID is 10 in this sample URL - https://tower.example.com/#/templates/job_template/10
 
-To allow extra variables to be passed into the Ansibe job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot below. 
+To allow extra variables to be passed into the Ansible job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot below. 
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_tower_job_template.png[]
 
