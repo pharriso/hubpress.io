@@ -114,6 +114,10 @@ So what should happen when we order this Catalog item?
 * Ansible will manage the host in the F5 loadbalancer pool as requested by the user.
 * Ansible will update the ticket in ServiceNow and close the ticket.
 
+You can watch a recording of this below.
+
+video::r4M7Pa2Zi0Y[youtube]
+
 === Acknowledgements
 
 There were two excellent guides I used for this. I just wanted to piece the best bits from both guides together:
