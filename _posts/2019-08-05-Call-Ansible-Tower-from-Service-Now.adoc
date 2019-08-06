@@ -108,11 +108,11 @@ image::https://cloudautomation.pharriso.co.uk/images/snow_sc_question_choices.pn
 
 So what should happen when we order this Catalog item? 
 
-* User orders Catalog Item. User is asked to input the name of the host they want to manage in the F5 Loadbalancer and set the state of the host (multi-choice)
-* The request is raised and will await approval
-* Once the request is approved ServiceNow will launch the playbook via the Tower API. The answers that the user provided to the Catalog item will be passed as variables to the Ansible Tower playbook. We will also pass the ServiceNow request number.
+* The user is prompted for the name of the host they want to manage in the F5 loadbalancer and the desired state of that host - enabled or forced_offline.
+* The request is raised and will await approval.
+* Once the request is approved ServiceNow will launch the playbook via the Tower API. The answers that the user provided in the catalog request will be passed as variables to the Ansible Tower playbook. We will also pass the ServiceNow request number.
 * Ansible will manage the host in the F5 loadbalancer pool as requested by the user.
-* Ansible will update the ticket in ServiceNow and close the ticket.
+* Ansible will update the ticket in ServiceNow to say what has happened and close the ticket.
 
 You can watch a recording of this below.
 
