@@ -1,15 +1,15 @@
 = Call Ansible Tower from ServiceNow
 
 
-In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. This use case allows us to hand off automation capabilities to end users whilst going through approval processes in ServiceNow.
+In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. This input then needs to be passed into Ansible Tower as extra variables so that the automation job can run succesfully. 
 
-In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. This input from the user needs to be passed into Ansible Tower as extra variables so that the automation job can run succesfully. 
+This integration allows us to use Tower for what it does best - provide the enterprise platform for executing our Ansible playbooks. We can leave Tower to manage credentials, provide RBAC and capture the audit history. At the same time we can leverage existing process in ServiceNow like approval processes and general change management workflows.
 
 *NOTE* I am not a ServiceNow developer and this is definitely not a tutorial in how best to use ServiceNow. This is something that I had to work out for a demo around Ansible Tower.
 
 === Ansible Tower Job Template
 
-In Ansible Tower, I already have my job template defined. Make a note of the job ID which is displayed in the URL. In the following example, the job ID is 10 - https://tower.example.com/#/templates/job_template/10
+I already have my https://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html[job template] defined in Ansible Tower. Make a note of the job ID which is displayed in the URL when you click on the Job Template in Tower. For example the job ID is 10 in this URL - https://tower.example.com/#/templates/job_template/10
 
 To allow extra variables to be passed into the Ansibe job execution, I need to enable *Prompt on launch* for *extra variables* as per the screenshot below. 
 
@@ -49,7 +49,7 @@ The *HTTP Query Parameter* should look as follows.
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_extra_vars.png[]
 
-Now we have defined how ServiceNow will make an API call to Ansible Tower. We need to create a workflow next to define how this API call will be triggered.
+Now we have defined how ServiceNow will make an API call to Ansible Tower. We need to create a workflow to define how this API call will be triggered.
 
 === ServiceNow Workflow
 
@@ -78,7 +78,7 @@ catch(ex) {
 
 <1> The name of the Outbound REST Message and HTTP Method name.
 <2> Example variable that will be passed from Catalog request.
-<3> Will pass the request number that is created by the user as a variable called *snow_request*
+<3> This is a special var we are determining from the ServiceNow catalog request. We will pass the request number that is created by the user as a variable called *snow_request*
 
 Now let's drag an approval task onto our workflow. Again, in the *Core* tab, drag the *Approval User* or *Approval Group* item across. Name the approval step and select the user or group that needs to approve. 
 
@@ -103,6 +103,25 @@ image::https://cloudautomation.pharriso.co.uk/images/snow_sc_var.png[]
 For multi-choice variables, you need to add *Question Choices* at the bottom of this screen. The *Text* being what you want the user to see on the form and the *Value* being the value of the variable that will be passed to Tower.
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_sc_question_choices.png[]
+
+=== Executing the workflow
+
+So what should happen when we order this Catalog item? 
+
+* User orders Catalog Item. User is asked to input the name of the host they want to manage in the F5 Loadbalancer and set the state of the host (multi-choice)
+* The request is raised and will await approval
+* Once the request is approved ServiceNow will launch the playbook via the Tower API. The answers that the user provided to the Catalog item will be passed as variables to the Ansible Tower playbook. We will also pass the ServiceNow request number.
+* Ansible will manage the host in the F5 loadbalancer pool as requested by the user.
+* Ansible will update the ticket in ServiceNow and close the ticket.
+
+=== Acknowledgements
+
+There were two excellent guides I used for this. I just wanted to piece the best bits from both guides together:
+
+https://liveaverage.com/blog/ansible-tower-and-servicenow-integration-in-10-minutes/
+
+https://github.com/eanylin/ansible-lab/tree/master/servicenow_demo/
+
 
 
 
