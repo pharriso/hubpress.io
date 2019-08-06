@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1565098059111" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1565100994024" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2019/08/05/Call-Ansible-Tower-from-Service-Now.html" />
     <meta name="referrer" content="origin" />
@@ -17,12 +17,12 @@
     <meta property="og:site_name" content="Cloud and Automation" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Call Ansible Tower from ServiceNow" />
-    <meta property="og:description" content="In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the" />
+    <meta property="og:description" content="In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. For this example, I have a playbook in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The playbook expects the user" />
     <meta property="og:url" content="http://cloudautomation.pharriso.co.uk/2019/08/05/Call-Ansible-Tower-from-Service-Now.html" />
     <meta property="article:published_time" content="2019-08-05T00:00:00.000Z" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Call Ansible Tower from ServiceNow" />
-    <meta name="twitter:description" content="In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the" />
+    <meta name="twitter:description" content="In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. For this example, I have a playbook in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The playbook expects the user" />
     <meta name="twitter:url" content="http://cloudautomation.pharriso.co.uk/2019/08/05/Call-Ansible-Tower-from-Service-Now.html" />
     
     <script type="application/ld+json">
@@ -39,7 +39,7 @@
     "headline": "Call Ansible Tower from ServiceNow",
     "url": "http://cloudautomation.pharriso.co.uk/2019/08/05/Call-Ansible-Tower-from-Service-Now.html",
     "datePublished": "2019-08-05T00:00:00.000Z",
-    "description": "In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the"
+    "description": "In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. For this example, I have a playbook in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The playbook expects the user"
 }
     </script>
 
@@ -97,7 +97,7 @@
                 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. In this example, I have a job template in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The job expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. So we need to pass these variables from ServiceNow to Ansible Tower.</p>
+<p>In this post we will look at how we can call Ansible Tower from ServiceNow as part of a ServiceNow Catalog Request. For this example, I have a <a href="https://github.com/pharriso/ansible_network_demo/blob/master/bigip_pool_member_snow.yml">playbook</a> in Ansible Tower that will manage the membership of a node within an F5 loadbalancer pool. The playbook expects the user to input the name of the node that should be managed and the state it should be in - either enabled or forced_offline. So we need to pass these variables from ServiceNow to Ansible Tower.</p>
 </div>
 <div class="paragraph">
 <p>This integration allows us to use Tower for what it does best - provide the enterprise platform for executing our Ansible playbooks. We can leave Tower to manage credentials, provide RBAC and capture the audit history. At the same time we can leverage existing processes within ServiceNow like approval processes and general change management workflows.</p>
@@ -402,7 +402,7 @@ catch(ex) {
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1565098059111"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1565100994024"></script>
 
 
     <script>
