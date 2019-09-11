@@ -23,9 +23,15 @@ In this scenario, in order for Tower to manage every node, we would need to allo
 
 https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster because they don't have the clustering software running on them. So we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints.
 
-SSH Proxy
+Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node. The downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
 
-How ansible is executed in both instances and the implications of this and limitations
+A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3. But there may also be times when I want to execute a playbook across managed nodes that may exist across all of those DC's. For example, push a patch to Dev servers across my entire estate. of course, I could have multple job templates defined to do this or execute multiple job templates.
+
+=== SSH Jump host
+
+The SSH jump nodes are as they say. They proxy ssh connections from Tower to managed nodes that they can't directly connect to. In this scenario, the playbook is executed on the Tower node, so we aren't offloading work to the jump host. 
+
+But one of the benefits of the SSH jump hosts is that we can assoicate the jump host to groups of hosts as a variable. Now if I want to execute a playbook across hosts in different isolated networks, I no longer need to assign anything to the specific job template or inventory in Tower. I now have a variable which will automatically be used to connect to the host regardless of where it is.
 
 == Example setup
 
