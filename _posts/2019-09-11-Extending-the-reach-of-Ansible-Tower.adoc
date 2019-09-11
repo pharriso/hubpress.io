@@ -18,6 +18,8 @@ Isolated nodes
 
 SSH Proxy
 
-== Example
+How ansible is executed in both instances and the implications of this and limitations
+
+== Example setup
 
 
