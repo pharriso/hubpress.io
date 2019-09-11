@@ -1,0 +1,19 @@
+= Extending the reach of Ansible Tower
+
+At the heart of Ansible is simplicity. One of the great features of Ansible, is the fact that it is agentless. 
+
+But, most customers don't have simple environments to manage. Customers will invariably have multiple datacenters, and within those datacenters they will most likely have isolated networks. 
+
+So how can we extend the reach of Ansible Tower into these isolated networks?
+
+== Simple example environment
+
+== Two ways to extend the reach
+
+Isolated nodes 
+
+SSH Proxy
+
+== Example
+
+
