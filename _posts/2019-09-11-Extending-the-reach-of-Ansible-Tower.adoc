@@ -8,6 +8,10 @@ So how can we extend the reach of Ansible Tower into these isolated networks?
 
 == Simple example environment
 
+I'm going to use a really simple example here to explain what this might look like. In reality, customers tend to have multiple datacenters and lot's of isolation between networks.
+
+image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC.png[]
+
 == Two ways to extend the reach
 
 Isolated nodes 
