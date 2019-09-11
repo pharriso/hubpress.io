@@ -4,17 +4,24 @@ At the heart of Ansible is simplicity. One of the great features of Ansible, is 
 
 But, most customers don't have simple environments to manage. Customers will invariably have multiple datacenters, and within those datacenters they will most likely have isolated networks. 
 
+But we can deploy Tower HA right? So why not just deploy a single Tower cluster with Tower nodes in different networks? We can't do this because of RabbitMQ.
+
 So how can we extend the reach of Ansible Tower into these isolated networks?
 
 == Simple example environment
 
-I'm going to use a really simple example here to explain what this might look like. In reality, customers tend to have multiple datacenters and lot's of isolation between networks.
+I'm going to use a really simple example here to explain what this might look like. In reality, you may have a lot more datacenters, a mix of public & private cloud and lot's of isolation between networks. In the following image, we have 3 datacenters (DC). Ansible Tower is deployed in DC1. There is a DMZ in DC1 which is is segregated with a firewall. We also have DC2 and DC3. Again, seperated with firewalls.
+
 
 image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC.png[]
 
+In this scenario, in order for Tower to manage every node, we would need to allow SSH access to every single managed node from our single Ansible Tower node. We may also be 
+
 == Two ways to extend the reach
 
-Isolated nodes 
+=== Isolated nodes 
+
+https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster because they don't have the clustering software running on them. So we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints.
 
 SSH Proxy
 
