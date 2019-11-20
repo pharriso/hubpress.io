@@ -15,6 +15,10 @@ To allow extra variables to be passed into the Ansible job execution, I need to 
 
 image::https://cloudautomation.pharriso.co.uk/images/snow_tower_job_template.png[]
 
+=== ServiceNow 
+
+As I am using a self-signed certificate in my instance, I need to configure ServiceNow to not verify the hostname in the certificate. To do this, search for *sys_properties.list* in the filter navigator. Then search for *com.glide.communications.httpclient.verify_hostname* and set it to false.
+
 === ServiceNow Outbound REST Message
 
 The first thing we need to configure in ServiceNow, is an Outbound REST message. This defines how it will connect to the Ansible Tower API to launch a job. This includes the API call, credentials and any extra variables we might want to pass from ServiceNow to Ansible Tower.  
