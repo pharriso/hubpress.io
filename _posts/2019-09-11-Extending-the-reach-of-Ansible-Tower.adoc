@@ -1,27 +1,31 @@
 = Extending the reach of Ansible Tower
 
-At the heart of Ansible is simplicity. One of the great features of Ansible, is the fact that it is agentless. 
+Some opening paragraph here.
 
-But, most customers don't have simple environments to manage. Customers will invariably have multiple datacenters, and within those datacenters they will most likely have isolated networks. 
+Most customers don't have simple environments to manage. Customers will invariably have multiple datacenters, and within those datacenters they will most likely have isolated networks. 
 
-But we can deploy Tower HA right? So why not just deploy a single Tower cluster with Tower nodes in different networks? We can't do this because of RabbitMQ.
+But we can deploy Tower HA right? So why not just deploy a single Tower cluster with Tower nodes in different networks? *Link to install notes - geographically co-located* We can't do this because of RabbitMQ.
 
 So how can we extend the reach of Ansible Tower into these isolated networks?
 
 == Simple example environment
 
-I'm going to use a really simple example here to explain what this might look like. In reality, you may have a lot more datacenters, a mix of public & private cloud and lot's of isolation between networks. In the following image, we have 3 datacenters (DC). Ansible Tower is deployed in DC1. There is a DMZ in DC1 which is is segregated with a firewall. We also have DC2 and DC3. Again, seperated with firewalls.
+I'm going to use a really simple example here to explain what this might look like. In reality, you may have a lot more datacenters, a mix of public & private cloud and lot's of isolation between networks. In the following image, we have 3 datacenters (DC's). Ansible Tower is deployed in DC1. There is a DMZ in DC1 which is is segregated with a firewall. We also have DC2 and DC3. Again, seperated with firewalls.
 
 
 image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC.png[]
 
-In this scenario, in order for Tower to manage every node, we would need to allow SSH access to every single managed node from our single Ansible Tower node. We may also be 
+In this scenario, in order for Tower to manage every node, we would need to open up firewall ports from Ansible Tower to every single managed node. This may not simply be SSH access either, we could be managing Windows hosts, network devices, cloud platforms and lot of other devices. In the case of our DMZ, we are now opening up a lot of connections between our DMZ hosts and our core network which is not desireable.
+
+We may also need to consider the affect of our Tower host managing a lot of devices in a remote datacenter. We might not have a great link between our sites so it may be useful to reduce the amount of traffic going from our Tower node to our remote sites.
+
+So how do we manage these isolated devices more effectively?
 
 == Two ways to extend the reach
 
 === Isolated nodes 
 
-https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster because they don't have the clustering software running on them. So we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints.
+https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster, so we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints.
 
 Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node. The downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
 
