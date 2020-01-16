@@ -1,0 +1,20 @@
+= Constructed Inventory Plugin
+
+Ansible is agentless, needs an inventory.
+
+We need a way of targeting the right hosts with Ansible - normally groups.
+
+Dynamic inventories are a great tool. They provide out of the box groups. But, they also provide rich information and facts.
+
+We can use those facts to construct additional groups to meet our automation needs.
+
+Example with foreman to show groups. 
+
+Example facts we get.
+
+Example - I want a group for all servers of type a,b or c.
+
+This allows me to assign variables to these groups as well.
+
+
+
