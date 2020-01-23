@@ -13,7 +13,7 @@ The answer to both of these questions, can quite often be to use a https://docs.
 But the dynamic inventory scripts and plugins also provide us with another benefit. They provide rich information about our managed nodes and the environment they are running in. This information is made available to us in the form of variables which we can use in our automation. For example, if we use the AWS (EC2) inventory plugin, then we will retrieve variables for each discovered device such as private IP addresses, regions, security groups and so on. 
 
 
-
+Let's look at an example of the Satellite dynamic inventory script.
 
 
 
