@@ -1,6 +1,14 @@
 = Constructed Inventory Plugin
 
-Ansible is agentless, needs an inventory.
+Ansible is simple automation tool that allows users to achieve common use cases such as configuration management, provisioning and complex multi-tier orchestration. Part of what makes Ansible so simple, is the fact that it is agentless. One doesn't need to deploy agents or any heavyweight control software to get up and running with Ansible automation. So, if Ansible is agentless, how does it know what nodes it should manage? We use an https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups[inventory] in Ansible to provide it with this list of managed nodes. 
+
+In it's simplest form, an inventory is just an INI or YAML file which contains a list of our managed nodes. This is ideal for learning how to use Ansible, but as you start to really use Ansible in anger and at scale you will probably face a couple of questions.
+
+How do I classify my infrastructure so that I can be more selective in what devices I automate against?
+
+How do I effectively and efficiently maintain a list of all of my managed nodes?
+
+The answer to both of these questions can quite often be to use a https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html[dynamic inventory]. A dynamic inventory is a script or plugin which will go to a source of truth and dynamically discover the nodes I need to manage. There are a number of sources that Ansible can talk to out of the box such as VMware vCenter, AWS, GCP, Azure or Red Hat Satellite (Foreman upstream component). There are also community inventory scripts such as this one which uses the https://github.com/ServiceNowITOM/ansible-sn-inventory[ServiceNow CMDB] as a source of truth.  And finally, you can https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html[develop your own] dyanmic inventories.
 
 We need a way of targeting the right hosts with Ansible - normally groups.
 
