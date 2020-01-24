@@ -77,7 +77,49 @@ Let's use our foreman example above to construct a new group. Let's say I want t
 
 === Example setup
 
-We need a directory for our foreman inventory script and plugin to live in so that we can source the whole directory. 
+We need a directory for our foreman inventory script and plugin to live in so that we can source the whole directory. I've got my ini file in this directory as well for this example.
+
+[source]
+....
+inventories/
+├── foreman_constructed.yml
+├── foreman.ini
+└── foreman.py
+....
+
+*NOTE* the constructed inventory plugin relies on data from another inventory  source so we need the foreman.py script to run before the constructed inventory. When sourcing a directory as an Ansible inventory they are executed alphabetically. More information can be found https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources[here]
+
+Here are the contents of my foreman_constructed.yml file.
+
+[source]
+....
+plugin: constructed
+strict: False
+keyed_groups:
+  -  prefix: ""
+     separator: ""
+     key: foreman.subscription_facet_attributes.registered_through
+....
+
+We should now see an additional group when using these inventory sources.
+
+[source]
+....
+ansible-inventory -i inventories/ --list
+
+    "sat6_demolab_local": {
+        "hosts": [
+            "dev-web1.demolab.local", 
+            "lb.demolab.local", 
+            "prod-web1.demolab.local", 
+            "prod-web2.demolab.local"
+....
+
+We can now see a group called sat6_demolab_local (underscore has replaced the fullstops) which it has constructed from the facts obtained by foreman inventory script.
+
+=== Using this in Tower
+
+
 
 
 
