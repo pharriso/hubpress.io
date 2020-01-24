@@ -73,7 +73,9 @@ This is just a fraction of the information we get from the inventory source, but
 
 So far we have been talking about pretty standard stuff with regards inventories. We've seen the type of facts and groups we get back from the foreman.py inventory script. But what if we want to dynamically create more groups based on the facts that we are getting back? Of course, if you have the necessary skills then you can modify the inventory script to return the information that you need. But, you may not need to do that. There is a really useful inventory plugin which serves this purpose. The https://docs.ansible.com/ansible/latest/plugins/inventory/constructed.html[constructed] inventory plugin takes information from another inventory source and uses that to construct new groups and variables. I really like this because it allows us to keep Ansible simple and avoid writing code if we don't want to.
 
-Let's use our foreman example above to construct a new group. Let's say I want to group hosts based on the Satellite node they are registred through. This would potentially allow me to identify which datacenter or network zone they are in which could be useful if I need to use a jump host to allow Ansible to manage them. Looking at the output above, we can see that this information sits under *foreman.subscription_facet_attributes.registered_through*
+Let's use our foreman example above to construct a new group. Let's say I want to group hosts based on the Satellite node they are registred through. This would potentially allow me to identify which datacenter or network zone they are in which could be useful if I need to use a jump host to allow Ansible to manage them. Looking at the output above, we can see that this information is available as a variable:
+
+*foreman.subscription_facet_attributes.registered_through*
 
 === Example setup
 
