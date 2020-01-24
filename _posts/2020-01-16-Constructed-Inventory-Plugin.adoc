@@ -77,7 +77,7 @@ Let's use our foreman example above to construct a new group. Let's say I want t
 
 === Example setup
 
-
+We need a directory for our foreman inventory script and plugin to live in so that we can source the whole directory. 
 
 
 
