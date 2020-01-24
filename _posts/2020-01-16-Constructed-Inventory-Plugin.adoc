@@ -14,10 +14,11 @@ The answer to both of these questions, can quite often be to use a https://docs.
 
 But the dynamic inventory scripts and plugins also provide us with another benefit. They provide rich information about our managed nodes and the environment they are running in. This information is made available to us in the form of variables which we can use in our automation. For example, if we use the AWS (EC2) inventory plugin, then we will retrieve variables for each discovered device such as private IP addresses, regions, security groups and so on. 
 
+=== Dynamic Inventory Example
 
 Let's look at an example of a dynamic inventory script to see what type of information it returns. I'm going to look at the Red Hat Satellite inventory script. https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite] is a tool that is often used for managing RHEL content and patching of RHEL servers. The script is actually called foreman.py because foreman is one of the upstream components in Red Hat Satellite. 
 
-Here we can see a snippet of the information that is returned by my Satellite server to automatically group my hosts. So for example, we can see a group called foreman_hostgroup_prod_web which contains to hosts - prod-web1.demolab.local and prod-web2.demolab.local. 
+Here we can see a snippet of the information that is returned by my Satellite server to automatically group my hosts. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. 
 
 [source]
 ....
@@ -64,7 +65,11 @@ ansible-inventory -i foreman.py --host prod-web1.demolab.local
 
 ....
 
-This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status of this host.
+This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status of this host. These facts are actually host_vars which we can use in our automation.
+
+=== Manipulating the data
+
+So far we have been talking about pretty standard stuff with regards inventories. And we
 
 We can use those facts to construct additional groups to meet our automation needs.
 
