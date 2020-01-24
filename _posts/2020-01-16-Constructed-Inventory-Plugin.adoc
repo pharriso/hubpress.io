@@ -117,10 +117,20 @@ ansible-inventory -i inventories/ --list
             "prod-web2.demolab.local"
 ....
 
-You can see a group call sat6_demolab_local (underscore has replaced the fullstops) which it has constructed from the facts obtained by foreman inventory script.
+You can see a group call sat6_demolab_local (underscore has replaced the fullstops) which it has constructed from the facts obtained by the foreman inventory script.
 
-=== Using this in Tower
+=== Using the constructed inventory in Tower
 
+Using a constructed inventory in Ansible Tower is straight forward. We will source the inventory script and plugin from a source control repository. This ensures I can use source control branching techniques to maintain control over any changes before they are pushed to production.
+
+My source control repository has the same structure as before with the exception that I no longer need the foreman.ini file. This is because I will pass my credentials from Tower.
+
+[source]
+....
+inventories/
+├── foreman_constructed.yml
+└── foreman.py
+....
 
 
 
