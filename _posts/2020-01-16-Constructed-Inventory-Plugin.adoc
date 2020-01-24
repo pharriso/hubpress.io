@@ -18,6 +18,17 @@ But the dynamic inventory scripts and plugins also provide us with another benef
 
 Let's look at an example of an inventory plugin to see what type of information it returns. I'm going to look at the Red Hat Satellite/Foreman plugin. https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite] is a tool that is often used for managing RHEL content and patching of RHEL servers. The plugin is actually called foreman because foreman is one of the upstream components in Red Hat Satellite. 
 
+Here are the contents of my inventory plugin file. We have a plaintext password here but we'll see how we can avoid that later with Ansible Tower.
+
+[source]
+....
+plugin: foreman
+url: http://sat6.demolab.local
+user: sat-tower
+password: Redhat123
+validate_certs: False
+....
+
 Here we can see the groups that are returned by my Satellite server. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.
 
 [source]
@@ -53,18 +64,17 @@ ansible-inventory -i foreman.yaml --host prod-web1.demolab.local
         "service_level": "", 
         "user": null, 
         "uuid": "3a9c2c19-57e4-4f98-b675-99d50d2d5b1e"
+        
+        
+        "lifecycle_environment_name": "Prod", 
+        "upgradable_module_stream_count": 0, 
+        "upgradable_package_count": 0, 
 ...
 
     "foreman_location_name": "intel", 
 ...
 
     "foreman_organization_name": "pharriso", 
-
-...
-
-        "lifecycle_environment_name": "Prod", 
-        "upgradable_module_stream_count": 0, 
-        "upgradable_package_count": 0, 
 
 ....
 
@@ -79,6 +89,10 @@ Let's use our foreman example above to construct a new group. As an example use 
 *foreman_subscription_facet_attributes.registered_through*
 
 I'm also going to group based on lifecycle environment in Satellite - so Prod or Dev in my case.
+
+For that I need the following variable:
+
+*foreman_content_facet_attributes.lifecycle_environment_name*
 
 === Example setup
 
@@ -102,28 +116,41 @@ strict: False
 keyed_groups:
   -  prefix: ""
      separator: ""
-     key: foreman.subscription_facet_attributes.registered_through
+     key: foreman_subscription_facet_attributes.registered_through
+
 ....
 
 We should now see an additional group when using these inventory sources.
 
 [source]
 ....
-ansible-inventory -i inventories/ --list
+ansible-inventory -i inventories/ --graph
+@all:
+  |--@Dev:
+  |  |--dev-web1.demolab.local
+  |--@Prod:
+  |  |--lb.demolab.local
+  |  |--prod-web1.demolab.local
+  |  |--prod-web2.demolab.local
+  |--@foreman_dev_web:
+  |  |--dev-web1.demolab.local
+  |--@foreman_prod_haproxy:
+  |  |--lb.demolab.local
+  |--@foreman_prod_web:
+  |  |--prod-web1.demolab.local
+  |  |--prod-web2.demolab.local
+  |--@sat6_demolab_local:
+  |  |--dev-web1.demolab.local
+  |  |--lb.demolab.local
+  |  |--prod-web1.demolab.local
 
-    "sat6_demolab_local": {
-        "hosts": [
-            "dev-web1.demolab.local", 
-            "lb.demolab.local", 
-            "prod-web1.demolab.local", 
-            "prod-web2.demolab.local"
 ....
 
-You can see a group call sat6_demolab_local (underscore has replaced the fullstops) which it has constructed from the facts obtained by the foreman inventory script.
+Note the new groups we now have available to us now. I can now target the *Prod* group or assign variables to something like the *sat6_demolab_local* group.
 
 === Using the constructed inventory in Tower
 
-I've been using Ansible Engine and the command line so far. But what happens if I am using Ansible Tower for my Ansible automation. The good news is that using a constructed inventory in Ansible Tower is straight forward. We will source the inventory script and plugin from a source control repository. This ensures I can use source control branching techniques to maintain control over any changes before they are pushed to production.
+I've been using Ansible Engine and the command line so far. But what happens if I am using Ansible Tower for my Ansible automation. The good news is that using a constructed inventory in Ansible Tower is straight forward. We will source the inventory plugins from a source control repository. This ensures I can use source control branching techniques to maintain control over any changes before they are pushed to production.
 
 My source control repository has the same structure as before with the exception that I no longer need the foreman.ini file. This is because I will pass my credentials from Tower. The repository is https://github.com/pharriso/ansible_constructed_inventory[here]. 
 
@@ -131,7 +158,7 @@ My source control repository has the same structure as before with the exception
 ....
 inventories/
 ├── foreman_constructed.yml
-└── foreman.py
+└── foreman.yaml
 ....
 
 
