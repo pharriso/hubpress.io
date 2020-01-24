@@ -18,7 +18,7 @@ But the dynamic inventory scripts and plugins also provide us with another benef
 
 Let's look at an example of a dynamic inventory script to see what type of information it returns. I'm going to look at the Red Hat Satellite inventory script. https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite] is a tool that is often used for managing RHEL content and patching of RHEL servers. The script is actually called foreman.py because foreman is one of the upstream components in Red Hat Satellite. 
 
-Here we can see a snippet of the information that is returned by my Satellite server to automatically group my hosts. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. 
+Here we can see a snippet of the information that is returned by my Satellite server to automatically group my hosts. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.
 
 [source]
 ....
