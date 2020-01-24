@@ -15,9 +15,56 @@ The answer to both of these questions, can quite often be to use a https://docs.
 But the dynamic inventory scripts and plugins also provide us with another benefit. They provide rich information about our managed nodes and the environment they are running in. This information is made available to us in the form of variables which we can use in our automation. For example, if we use the AWS (EC2) inventory plugin, then we will retrieve variables for each discovered device such as private IP addresses, regions, security groups and so on. 
 
 
-Let's look at an example of a dynamic inventory script to see what type of information it returns. I'm going to look at the 
+Let's look at an example of a dynamic inventory script to see what type of information it returns. I'm going to look at the Red Hat Satellite inventory script. https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite] is a tool that is often used for managing RHEL content and patching of RHEL servers. The script is actually called foreman.py because foreman is one of the upstream components in Red Hat Satellite. 
 
+Here we can see a snippet of the information that is returned by my Satellite server to automatically group my hosts. So for example, we can see a group called foreman_hostgroup_prod_web which contains to hosts - prod-web1.demolab.local and prod-web2.demolab.local. 
 
+[source]
+....
+ansible-inventory -i foreman.py --graph
+
+@all:
+  |--@foreman_content_view_rhel7:
+  |  |--dev-web1.demolab.local
+  |  |--lb.demolab.local
+  |  |--prod-web1.demolab.local
+  |  |--prod-web2.demolab.local
+  |--@foreman_hostgroup_dev_web:
+  |  |--dev-web1.demolab.local
+  |--@foreman_hostgroup_prod_haproxy:
+  |  |--lb.demolab.local
+  |--@foreman_hostgroup_prod_web:
+  |  |--prod-web1.demolab.local
+  |  |--prod-web2.demolab.local
+....
+
+As well as the groupings, we also get a number of facts from Satellite. Again, here is a snippet from one of the hosts:
+
+[source]
+....
+ansible-inventory -i foreman.py --host prod-web1.demolab.local
+
+        "subscription_facet_attributes": {
+            "autoheal": true, 
+            "id": 4883, 
+            "last_checkin": "2020-01-14 02:08:23 UTC", 
+            "purpose_addons": [], 
+            "purpose_role": null, 
+            "purpose_usage": null, 
+            "registered_at": "2019-12-10 10:21:03 UTC", 
+            "registered_through": "sat6.demolab.local", 
+            "release_version": null, 
+            "service_level": "", 
+            "user": null, 
+            "uuid": "3a9c2c19-57e4-4f98-b675-99d50d2d5b1e"
+        }, 
+        "subscription_global_status": 0, 
+        "subscription_status": 0, 
+        "subscription_status_label": "Fully entitled", 
+
+....
+
+This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status of this host.
 
 We can use those facts to construct additional groups to meet our automation needs.
 
