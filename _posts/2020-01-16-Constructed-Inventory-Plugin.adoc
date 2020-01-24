@@ -121,9 +121,9 @@ You can see a group call sat6_demolab_local (underscore has replaced the fullsto
 
 === Using the constructed inventory in Tower
 
-Using a constructed inventory in Ansible Tower is straight forward. We will source the inventory script and plugin from a source control repository. This ensures I can use source control branching techniques to maintain control over any changes before they are pushed to production.
+I've been using Ansible Engine and the command line so far. But what happens if I am using Ansible Tower for my Ansible automation. The good news is that using a constructed inventory in Ansible Tower is straight forward. We will source the inventory script and plugin from a source control repository. This ensures I can use source control branching techniques to maintain control over any changes before they are pushed to production.
 
-My source control repository has the same structure as before with the exception that I no longer need the foreman.ini file. This is because I will pass my credentials from Tower.
+My source control repository has the same structure as before with the exception that I no longer need the foreman.ini file. This is because I will pass my credentials from Tower. The repository is https://github.com/pharriso/ansible_constructed_inventory[here]. 
 
 [source]
 ....
