@@ -16,54 +16,55 @@ But the dynamic inventory scripts and plugins also provide us with another benef
 
 === Dynamic Inventory Example
 
-Let's look at an example of a dynamic inventory script to see what type of information it returns. I'm going to look at the Red Hat Satellite inventory script. https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite] is a tool that is often used for managing RHEL content and patching of RHEL servers. The script is actually called foreman.py because foreman is one of the upstream components in Red Hat Satellite. 
+Let's look at an example of an inventory plugin to see what type of information it returns. I'm going to look at the Red Hat Satellite/Foreman plugin. https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite] is a tool that is often used for managing RHEL content and patching of RHEL servers. The plugin is actually called foreman because foreman is one of the upstream components in Red Hat Satellite. 
 
-Here we can see a snippet of the information that is returned by my Satellite server to automatically group my hosts. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.
+Here we can see the groups that are returned by my Satellite server. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.
 
 [source]
 ....
-ansible-inventory -i foreman.py --graph
+ansible-inventory -i foreman.yaml --graph
 
 @all:
-  |--@foreman_content_view_rhel7:
+  |--@foreman_dev_web:
   |  |--dev-web1.demolab.local
+  |--@foreman_prod_haproxy:
   |  |--lb.demolab.local
-  |  |--prod-web1.demolab.local
-  |  |--prod-web2.demolab.local
-  |--@foreman_hostgroup_dev_web:
-  |  |--dev-web1.demolab.local
-  |--@foreman_hostgroup_prod_haproxy:
-  |  |--lb.demolab.local
-  |--@foreman_hostgroup_prod_web:
+  |--@foreman_prod_web:
   |  |--prod-web1.demolab.local
   |  |--prod-web2.demolab.local
 ....
 
-As well as the groupings, we also get a number of facts from Satellite. Again, here is a snippet from one of the hosts:
+As well as the groupings, we also get a number of facts from Satellite. Again, here are some snippets from one of the hosts:
 
 [source]
 ....
-ansible-inventory -i foreman.py --host prod-web1.demolab.local
+ansible-inventory -i foreman.yaml --host prod-web1.demolab.local
 
-{
-    "foreman": {
-        "subscription_facet_attributes": {
-            "autoheal": true, 
-            "id": 4883, 
-            "last_checkin": "2020-01-14 02:08:23 UTC", 
-            "purpose_addons": [], 
-            "purpose_role": null, 
-            "purpose_usage": null, 
-            "registered_at": "2019-12-10 10:21:03 UTC", 
-            "registered_through": "sat6.demolab.local", 
-            "release_version": null, 
-            "service_level": "", 
-            "user": null, 
-            "uuid": "3a9c2c19-57e4-4f98-b675-99d50d2d5b1e"
-        }, 
-        "subscription_global_status": 0, 
-        "subscription_status": 0, 
-        "subscription_status_label": "Fully entitled", 
+    "foreman_subscription_facet_attributes": {
+        "autoheal": true, 
+        "id": 4883, 
+        "last_checkin": "2020-01-14 02:08:23 UTC", 
+        "purpose_addons": [], 
+        "purpose_role": null, 
+        "purpose_usage": null, 
+        "registered_at": "2019-12-10 10:21:03 UTC", 
+        "registered_through": "sat6.demolab.local", 
+        "release_version": null, 
+        "service_level": "", 
+        "user": null, 
+        "uuid": "3a9c2c19-57e4-4f98-b675-99d50d2d5b1e"
+...
+
+    "foreman_location_name": "intel", 
+...
+
+    "foreman_organization_name": "pharriso", 
+
+...
+
+        "lifecycle_environment_name": "Prod", 
+        "upgradable_module_stream_count": 0, 
+        "upgradable_package_count": 0, 
 
 ....
 
