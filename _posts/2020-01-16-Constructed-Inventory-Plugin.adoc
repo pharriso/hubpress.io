@@ -68,29 +68,30 @@ ansible-inventory -i foreman.yaml --host prod-web1.demolab.local
 
 ....
 
-This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status of this host. These facts are actually host_vars which we can use in our automation.
+This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status, available errata and other foreman objects. These facts are actually host_vars which we can use in our automation.
 
 === How can we "construct" additional data
 
-So far we have been talking about pretty standard stuff with regards inventories. We've seen the type of facts and groups we get back from the foreman.py inventory script. But what if we want to dynamically create more groups based on the facts that we are getting back? Of course, if you have the necessary skills then you can modify the inventory script to return the information that you need. But, you may not need to do that. There is a really useful inventory plugin which serves this purpose. The https://docs.ansible.com/ansible/latest/plugins/inventory/constructed.html[constructed] inventory plugin takes information from another inventory source and uses that to construct new groups and variables. I really like this because it allows us to keep Ansible simple and avoid writing code if we don't want to.
+So far we have been talking about pretty standard stuff with regards inventories. We've seen the type of facts and groups we get back from the foreman inventory plugin. But what if we want to dynamically create more groups based on the facts that we are getting back? Of course, if you have the necessary skills then you can modify the inventory plugin to return the information that you need. But, you may not need to do that. There is a really useful inventory plugin which serves this purpose. The https://docs.ansible.com/ansible/latest/plugins/inventory/constructed.html[constructed] inventory plugin takes information from another inventory source and uses that to construct new groups and variables. I really like this because it allows us to keep Ansible simple and avoid writing code if we don't want to.
 
 Let's use our foreman example above to construct a new group. As an example use case, let's say I want to group hosts based on the Satellite node they are registred through. This would potentially allow me to identify which datacenter or network zone they are in which could be useful if I need to use a jump host to allow Ansible to manage them. Looking at the output above, we can see that this information is available as a variable:
 
-*foreman.subscription_facet_attributes.registered_through*
+*foreman_subscription_facet_attributes.registered_through*
+
+I'm also going to group based on lifecycle environment in Satellite - so Prod or Dev in my case.
 
 === Example setup
 
-We need a directory for our foreman inventory script and plugin to live in so that we can source the whole directory. I've got my ini file in this directory as well for this example.
+We need a directory for our foreman inventory plugin to live in so that we can source multiple inventory plugins or scripts.
 
 [source]
 ....
 inventories/
 ├── foreman_constructed.yml
-├── foreman.ini
-└── foreman.py
+└── foreman.yaml
 ....
 
-*NOTE* the constructed inventory plugin relies on data from another inventory  source so we need the foreman.py script to run before the constructed inventory. When sourcing a directory as an Ansible inventory they are executed alphabetically. More information can be found https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources[here]
+*NOTE* the constructed inventory plugin relies on data from another inventory  source so we need the foreman.yaml plugin to be invoked before the constructed inventory. When sourcing a directory as an Ansible inventory they are executed alphabetically. More information can be found https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources[here]
 
 Here are the contents of my foreman_constructed.yml file.
 
