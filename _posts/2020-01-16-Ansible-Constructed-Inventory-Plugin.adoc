@@ -210,7 +210,7 @@ We will use Ansible Tower's credential management capabilities to pass these det
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-project.png[]
 
-In our previous example we stored the details for our Satellite server in plaintext. We are going to use https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html[Ansible Tower's credential management] to store all of these details now. First we need to create a credential type in Tower. In the Tower UI, Navigate to *Credential Types* and add a new credential with the following details:
+As previously mentioned, we are going to use https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html[Ansible Tower's credential management] to store all of the credentials that we need to talk to our Satellite server. First we need to create a credential type in Tower. In the Tower UI, Navigate to *Credential Types* and add a new credential with the following details:
 
 .INPUT CONFIGURATION
 [source]
