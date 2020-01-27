@@ -76,6 +76,8 @@ ansible-inventory -i foreman.yaml --host prod-web1.demolab.local
 
     "foreman_organization_name": "Red Hat", 
 
+...
+    "foreman_ip": "10.50.0.31", 
 ....
 
 This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status, available errata and other foreman objects. These facts are actually host_vars which we can use in our automation.
@@ -154,7 +156,15 @@ Note the new groups we now have available to us now. I can now target these new 
 
 === Example 2 - Generating new variables
 
-As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables./ 
+As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables. For this example, I am going to use the IP address that Satellite provided me with *foreman_ip* to set the *ansible_host* variable.
+
+[source]
+....
+ansible-inventory -i inventories/ --host prod-web1.demolab.local
+
+{
+    "ansible_host": "10.50.0.31", 
+....
 
 === Using the constructed inventory in Tower
 
