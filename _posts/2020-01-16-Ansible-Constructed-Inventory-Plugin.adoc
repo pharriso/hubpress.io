@@ -23,7 +23,7 @@ Here are the contents of my inventory plugin file. We have a plaintext password 
 [source]
 ....
 plugin: foreman
-url: http://sat6.demolab.local
+url: https://sat6.demolab.local
 user: sat-tower
 password: Redhat123
 validate_certs: False
