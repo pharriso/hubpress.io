@@ -226,9 +226,9 @@ image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory
 
 Next we add an inventory source to the inventory. Ensure to add the correct credential that we created earlier.
 
-image::https://cloudautomation.pharriso.co.uk/images/constructed_tower_inventory_source.png[]
+image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-source.png[]
 
 Once the inventory source has synced, we should see that the relevant hosts have been imported with the constructed groups.
 
-image::https://cloudautomation.pharriso.co.uk/images/constructed_tower_inventory_groups.png[]
+image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-groups.png.png[]
 
