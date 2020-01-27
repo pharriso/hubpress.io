@@ -206,7 +206,7 @@ plugin: foreman
 validate_certs: False
 ....
 
-First, create a project which will pull in out inventory files from source control.
+We will use Ansible Tower's credential management capabilities to pass these details to the inventory plugin. But, First we need to create a project in Tower which will pull in our inventory files from source control.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-project.png[]
 
