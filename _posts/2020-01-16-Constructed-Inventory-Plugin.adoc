@@ -165,8 +165,6 @@ inventories/
 └── foreman.yml
 ....
 
-I'm not going to walk through all of the objects in Tower in this section but rather list the basic objects that you need to create. 
-
 First, create a project which will pull in out inventory files from source control.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-project.png[]
