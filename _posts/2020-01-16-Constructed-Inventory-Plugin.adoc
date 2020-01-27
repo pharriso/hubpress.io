@@ -80,7 +80,7 @@ ansible-inventory -i foreman.yaml --host prod-web1.demolab.local
 
 This is just a fraction of the information we get from the inventory source, but we can see lot's of useful information here about the subscription status, available errata and other foreman objects. These facts are actually host_vars which we can use in our automation.
 
-=== How can we "construct" additional data
+=== How can we "construct" additional data?
 
 So far we have been talking about pretty standard stuff with regards inventories. We've seen the type of facts and groups we get back from the foreman inventory plugin. But what if we want to dynamically create more groups based on the facts that we are getting back? Of course, if you have the necessary skills then you can modify the inventory plugin to return the information that you need. But, you may not need to do that. There is a really useful inventory plugin which serves this purpose. The https://docs.ansible.com/ansible/latest/plugins/inventory/constructed.html[constructed] inventory plugin takes information from another inventory source and uses that to construct new groups and variables. I really like this because it allows us to keep Ansible simple and avoid writing code if we don't want to.
 
@@ -102,10 +102,10 @@ We need a directory for our foreman inventory plugin to live in so that we can s
 ....
 inventories/
 ├── foreman_constructed.yml
-└── foreman.yaml
+└── foreman.yml
 ....
 
-*NOTE* the constructed inventory plugin relies on data from another inventory  source so we need the foreman.yaml plugin to be invoked before the constructed inventory. When sourcing a directory as an Ansible inventory they are executed alphabetically. More information can be found https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources[here]
+*NOTE* the constructed inventory plugin relies on data from another inventory  source so we need the foreman.yml plugin to be invoked before the constructed inventory. When sourcing a directory as an Ansible inventory they are executed alphabetically. More information can be found https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources[here]
 
 Here are the contents of my foreman_constructed.yml file.
 
@@ -116,11 +116,15 @@ strict: False
 keyed_groups:
   -  prefix: ""
      separator: ""
-     key: foreman_subscription_facet_attributes.registered_through
+     key: foreman_subscription_facet_attributes.registered_throug   
+  -  prefix: ""
+     separator: ""
+     key: foreman_content_facet_attributes.lifecycle_environment_name
+
 
 ....
 
-We should now see an additional group when using these inventory sources.
+Now we can source the directory which will incorporate both inventory sources:
 
 [source]
 ....
@@ -146,7 +150,7 @@ ansible-inventory -i inventories/ --graph
 
 ....
 
-Note the new groups we now have available to us now. I can now target the *Prod* group or assign variables to something like the *sat6_demolab_local* group.
+Note the new groups we now have available to us now. I can now target these new groups or assign variables to them using group_vars.
 
 === Using the constructed inventory in Tower
 
