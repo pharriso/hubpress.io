@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:51:58 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:52:59 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this blog post we will look at how we can easily enrich an existing dynamic inventory using the constructed inventory plugin. But, before we do that, let&#8217;s take a step back.</p>
@@ -45,7 +45,7 @@ validate_certs: False</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here we can see the groups that are returned by my Satellite server. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.</p>
+<p>Below is a list of the groups that are returned by my Satellite server. For example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.</p>
 </div>
 <div class="listingblock">
 <div class="content">
