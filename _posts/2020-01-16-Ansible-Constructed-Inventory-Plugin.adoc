@@ -198,6 +198,14 @@ inventories/
 └── foreman.yml
 ....
 
+Also, note how the foreman.yml file no longer contains a username, password or Satellite server URL. 
+
+[source]
+....
+plugin: foreman
+validate_certs: False
+....
+
 First, create a project which will pull in out inventory files from source control.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-project.png[]
