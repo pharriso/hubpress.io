@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580143464406" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580143631078" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2020/01/16/Ansible-Constructed-Inventory-Plugin.html" />
     <meta name="referrer" content="origin" />
@@ -284,6 +284,27 @@ keyed_groups:
 <div class="paragraph">
 <p>As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables. For this example, I am going to use the IP address that Satellite provided me with <strong>foreman_ip</strong> to set the <strong>ansible_host</strong> variable.</p>
 </div>
+<div class="paragraph">
+<p>The complete foreman_constructed.yml file now looks as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>plugin: constructed
+strict: False
+compose:
+     ansible_host: foreman_ip
+keyed_groups:
+  -  prefix: ""
+     separator: ""
+     key: foreman_subscription_facet_attributes.registered_through
+  -  prefix: ""
+     separator: ""
+     key: foreman_content_facet_attributes.lifecycle_environment_name</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the ansible_host variable being set:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>ansible-inventory -i inventories/ --host prod-web1.demolab.local
@@ -495,7 +516,7 @@ required:
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580143464406"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580143631078"></script>
 
 
     <script>

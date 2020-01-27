@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:44:24 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:47:11 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this blog post we will look at how we can easily enrich an existing dynamic inventory using the constructed inventory plugin. But, before we do that, let&#8217;s take a step back.</p>
@@ -187,6 +187,27 @@ keyed_groups:
 <h3 id="_example_2_generating_new_variables">Example 2 - Generating new variables</h3>
 <div class="paragraph">
 <p>As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables. For this example, I am going to use the IP address that Satellite provided me with <strong>foreman_ip</strong> to set the <strong>ansible_host</strong> variable.</p>
+</div>
+<div class="paragraph">
+<p>The complete foreman_constructed.yml file now looks as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>plugin: constructed
+strict: False
+compose:
+     ansible_host: foreman_ip
+keyed_groups:
+  -  prefix: ""
+     separator: ""
+     key: foreman_subscription_facet_attributes.registered_through
+  -  prefix: ""
+     separator: ""
+     key: foreman_content_facet_attributes.lifecycle_environment_name</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the ansible_host variable being set:</p>
 </div>
 <div class="listingblock">
 <div class="content">
