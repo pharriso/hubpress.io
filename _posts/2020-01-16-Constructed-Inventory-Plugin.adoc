@@ -228,5 +228,5 @@ image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory
 
 Once the inventory source has synced, we should see that the relevant hosts have been imported with the constructed groups.
 
-image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-groups.png.png[]
+image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-groups.png[]
 
