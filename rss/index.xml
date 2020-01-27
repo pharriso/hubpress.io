@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:50:46 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:51:58 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this blog post we will look at how we can easily enrich an existing dynamic inventory using the constructed inventory plugin. But, before we do that, let&#8217;s take a step back.</p>
@@ -38,7 +38,7 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>plugin: foreman
-url: http://sat6.demolab.local
+url: https://sat6.demolab.local
 user: sat-tower
 password: Redhat123
 validate_certs: False</code></pre>
