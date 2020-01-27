@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580144447394" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580144592714" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2020/01/16/Ansible-Constructed-Inventory-Plugin.html" />
     <meta name="referrer" content="origin" />
@@ -339,7 +339,7 @@ validate_certs: False</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We will use Ansible Tower&#8217;s credential management capabilities to pass these details to the inventory plugin. But, First we need to create a project in Tower which will pull in our inventory files from source control.</p>
+<p>We will use Ansible Tower&#8217;s credential management capabilities to pass these details to the inventory plugin. But, first we need to create a project in Tower which will pull in our inventory files from source control.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -347,7 +347,7 @@ validate_certs: False</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As previously mentioned, we are going to use <a href="https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html">Ansible Tower&#8217;s credential management</a> to store all of the credentials that we need to talk to our Satellite server. First we need to create a credential type in Tower. In the Tower UI, Navigate to <strong>Credential Types</strong> and add a new credential with the following details:</p>
+<p>As previously mentioned, we are going to use <a href="https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html">Ansible Tower&#8217;s credential management</a> to store all of the credentials that we need to talk to our Satellite server. We need to define a custom credential type to talk to Satellite for the purpose of our inventory plugin. In the Tower UI, Navigate to <strong>Credential Types</strong> and add a new credential with the following details:</p>
 </div>
 <div class="listingblock">
 <div class="title">INPUT CONFIGURATION</div>
@@ -402,7 +402,7 @@ required:
 </div>
 </div>
 <div class="paragraph">
-<p>We can now create an inventory:</p>
+<p>Next we need to create an inventory:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -410,7 +410,7 @@ required:
 </div>
 </div>
 <div class="paragraph">
-<p>Next we add an inventory source to the inventory. Ensure to add the correct credential that we created earlier.</p>
+<p>Then we can add an inventory source to the inventory. Ensure to add the correct credential that we created earlier.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -525,7 +525,7 @@ required:
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580144447394"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580144592714"></script>
 
 
     <script>
