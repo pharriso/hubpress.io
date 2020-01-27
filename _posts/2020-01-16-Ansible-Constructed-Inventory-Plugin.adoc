@@ -158,6 +158,25 @@ Note the new groups we now have available to us now. I can now target these new 
 
 As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables. For this example, I am going to use the IP address that Satellite provided me with *foreman_ip* to set the *ansible_host* variable.
 
+The complete foreman_constructed.yml file now looks as follows:
+
+[source]
+....
+plugin: constructed
+strict: False
+compose:
+     ansible_host: foreman_ip
+keyed_groups:
+  -  prefix: ""
+     separator: ""
+     key: foreman_subscription_facet_attributes.registered_through
+  -  prefix: ""
+     separator: ""
+     key: foreman_content_facet_attributes.lifecycle_environment_name
+....
+
+This results in the ansible_host variable being set:
+
 [source]
 ....
 ansible-inventory -i inventories/ --host prod-web1.demolab.local
