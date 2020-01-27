@@ -29,7 +29,7 @@ password: Redhat123
 validate_certs: False
 ....
 
-Here we can see the groups that are returned by my Satellite server. So for example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.
+Below is a list of the groups that are returned by my Satellite server. For example, we can see a group called foreman_hostgroup_prod_web which contains two hosts - prod-web1.demolab.local and prod-web2.demolab.local. This is because I have a hostgroup in Satellite which these two servers are members of.
 
 [source]
 ....
