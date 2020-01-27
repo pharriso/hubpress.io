@@ -206,11 +206,11 @@ plugin: foreman
 validate_certs: False
 ....
 
-We will use Ansible Tower's credential management capabilities to pass these details to the inventory plugin. But, First we need to create a project in Tower which will pull in our inventory files from source control.
+We will use Ansible Tower's credential management capabilities to pass these details to the inventory plugin. But, first we need to create a project in Tower which will pull in our inventory files from source control.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-project.png[]
 
-As previously mentioned, we are going to use https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html[Ansible Tower's credential management] to store all of the credentials that we need to talk to our Satellite server. First we need to create a credential type in Tower. In the Tower UI, Navigate to *Credential Types* and add a new credential with the following details:
+As previously mentioned, we are going to use https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html[Ansible Tower's credential management] to store all of the credentials that we need to talk to our Satellite server. We need to define a custom credential type to talk to Satellite for the purpose of our inventory plugin. In the Tower UI, Navigate to *Credential Types* and add a new credential with the following details:
 
 .INPUT CONFIGURATION
 [source]
@@ -259,11 +259,11 @@ Now that we have a credential type in Ansible Tower, we can create a credential 
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-credential.png[]
 
-We can now create an inventory:
+Next we need to create an inventory:
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory.png[]
 
-Next we add an inventory source to the inventory. Ensure to add the correct credential that we created earlier.
+Then we can add an inventory source to the inventory. Ensure to add the correct credential that we created earlier.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-source.png[]
 
