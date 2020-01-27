@@ -267,7 +267,7 @@ Then we can add an inventory source to the inventory. Ensure to add the correct 
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-source.png[]
 
-Once the inventory source has synced, we should see that the relevant hosts have been imported with the constructed groups.
+Once the inventory source has finished syncing, we should see that the relevant hosts have been imported with the constructed groups and composed variables.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-groups.png[]
 
