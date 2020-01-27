@@ -94,7 +94,7 @@ For that I need the following variable:
 
 *foreman_content_facet_attributes.lifecycle_environment_name*
 
-=== Example setup
+=== Example 1 - Generating new groups
 
 We need a directory for our foreman inventory plugin to live in so that we can source multiple inventory plugins or scripts.
 
@@ -151,6 +151,10 @@ ansible-inventory -i inventories/ --graph
 ....
 
 Note the new groups we now have available to us now. I can now target these new groups or assign variables to them using group_vars.
+
+=== Example 2 - Generating new variables
+
+As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables./ 
 
 === Using the constructed inventory in Tower
 
@@ -229,4 +233,8 @@ image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory
 Once the inventory source has synced, we should see that the relevant hosts have been imported with the constructed groups.
 
 image::https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-groups.png[]
+
+=== Summary
+
+The constructed inventory plugin can be really useful for manipulating the information returned from existing dynamic inventory plugins and scripts. This example used a plugin but the constructed inventory plugin works in the same way with inventory scripts. It is worth noting that some inventory plugins provide in-built capabilities to construct variables and generate groups. Check the inventory plugins before deciding if you need to also use the constructed inventory plugin.
 
