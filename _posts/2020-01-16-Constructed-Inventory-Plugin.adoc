@@ -169,8 +169,7 @@ I'm not going to walk through all of the objects in Tower in this section but ra
 
 First, create a project which will pull in out inventory files from source control.
 
-image::https://cloudautomation.pharriso.co.uk/images/constructued-1-tower-project.png[]
-
+image::https://cloudautomation.pharriso.co.uk/images/constructued-tower-project.png[]
 
 In our previous example we stored the details for our Satellite server in plaintext. We are going to use https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html[Ansible Tower's credential management] to store all of these details now. First we need to create a credential type in Tower. In the Tower UI, Navigate to *Credential Types* and add a new credential with the following details:
 
@@ -217,5 +216,7 @@ ansible-doc -t inventory foreman
           - name: FOREMAN_USER
 ....
 
-Now that we have a credential type in Ansible Tower, we can create a credential using this new type. This should 
+Now that we have a credential type in Ansible Tower, we can create a credential using this new type. 
+
+image::https://cloudautomation.pharriso.co.uk/images/constructued-tower-credential.png[]
 
