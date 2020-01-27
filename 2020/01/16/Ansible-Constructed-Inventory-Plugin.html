@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580142223324" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580143137227" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2020/01/16/Ansible-Constructed-Inventory-Plugin.html" />
     <meta name="referrer" content="origin" />
@@ -216,7 +216,7 @@ validate_certs: False</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example_setup">Example setup</h3>
+<h3 id="_example_1_generating_new_groups">Example 1 - Generating new groups</h3>
 <div class="paragraph">
 <p>We need a directory for our foreman inventory plugin to live in so that we can source multiple inventory plugins or scripts.</p>
 </div>
@@ -274,6 +274,12 @@ keyed_groups:
 </div>
 <div class="paragraph">
 <p>Note the new groups we now have available to us now. I can now target these new groups or assign variables to them using group_vars.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_2_generating_new_variables">Example 2 - Generating new variables</h3>
+<div class="paragraph">
+<p>As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables./</p>
 </div>
 </div>
 <div class="sect2">
@@ -379,6 +385,12 @@ required:
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_summary">Summary</h3>
+<div class="paragraph">
+<p>The constructed inventory plugin can be really useful for manipulating the information returned from existing dynamic inventory plugins and scripts. This example used a plugin but the constructed inventory plugin works in the same way with inventory scripts. It is worth noting that some inventory plugins provide in-built capabilities to construct variables and generate groups. Check the inventory plugins before deciding if you need to also use the constructed inventory plugin.</p>
+</div>
+</div>
             </section>
 
 
@@ -472,7 +484,7 @@ required:
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580142223324"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580143137227"></script>
 
 
     <script>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:23:43 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 27 Jan 2020 16:38:57 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this blog post we will look at how we can easily enrich an existing dynamic inventory using the constructed inventory plugin. But, before we do that, let&#8217;s take a step back.</p>
@@ -120,7 +120,7 @@ validate_certs: False</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example_setup">Example setup</h3>
+<h3 id="_example_1_generating_new_groups">Example 1 - Generating new groups</h3>
 <div class="paragraph">
 <p>We need a directory for our foreman inventory plugin to live in so that we can source multiple inventory plugins or scripts.</p>
 </div>
@@ -178,6 +178,12 @@ keyed_groups:
 </div>
 <div class="paragraph">
 <p>Note the new groups we now have available to us now. I can now target these new groups or assign variables to them using group_vars.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_2_generating_new_variables">Example 2 - Generating new variables</h3>
+<div class="paragraph">
+<p>As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables./</p>
 </div>
 </div>
 <div class="sect2">
@@ -281,6 +287,12 @@ required:
 <div class="content">
 <img src="https://cloudautomation.pharriso.co.uk/images/constructed-tower-inventory-groups.png" alt="constructed tower inventory groups">
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_summary">Summary</h3>
+<div class="paragraph">
+<p>The constructed inventory plugin can be really useful for manipulating the information returned from existing dynamic inventory plugins and scripts. This example used a plugin but the constructed inventory plugin works in the same way with inventory scripts. It is worth noting that some inventory plugins provide in-built capabilities to construct variables and generate groups. Check the inventory plugins before deciding if you need to also use the constructed inventory plugin.</p>
 </div>
 </div>]]></description><link>http://cloudautomation.pharriso.co.uk/2020/01/16/Ansible-Constructed-Inventory-Plugin.html</link><guid isPermaLink="true">http://cloudautomation.pharriso.co.uk/2020/01/16/Ansible-Constructed-Inventory-Plugin.html</guid><pubDate>Thu, 16 Jan 2020 00:00:00 GMT</pubDate></item><item><title><![CDATA[Call Ansible Tower from ServiceNow]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
