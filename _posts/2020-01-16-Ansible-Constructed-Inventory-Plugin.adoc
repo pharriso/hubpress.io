@@ -152,11 +152,11 @@ ansible-inventory -i inventories/ --graph
 
 ....
 
-Note the new groups we now have available to us now. I can now target these new groups or assign variables to them using group_vars.
+Note the new groups we now have available to us. I can now target these new groups or assign variables to them using group_vars.
 
 === Example 2 - Generating new variables
 
-As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables. For this example, I am going to use the IP address that Satellite provided me with *foreman_ip* to set the *ansible_host* variable.
+As well as generating new groups, the constructed inventory plugin can also be used to "compose" new variables. For this example, I am going to use the IP address that Satellite provided me with *foreman_ip* variable to set the *ansible_host* variable.
 
 The complete foreman_constructed.yml file now looks as follows:
 
