@@ -1,4 +1,4 @@
-= Constructed Inventory Plugin
+= Ansible Constructed Inventory Plugin
 
 In this blog post we will look at how we can easily enrich an existing dynamic inventory using the constructed inventory plugin. But, before we do that, let's take a step back.
 
