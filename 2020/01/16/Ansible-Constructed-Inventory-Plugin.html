@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580143979892" />
+    <link rel="stylesheet" type="text/css" href="//cloudautomation.pharriso.co.uk/themes/casper/assets/built/screen.css?v=1580144043233" />
 
     <link rel="canonical" href="http://cloudautomation.pharriso.co.uk/2020/01/16/Ansible-Constructed-Inventory-Plugin.html" />
     <meta name="referrer" content="origin" />
@@ -203,7 +203,7 @@ validate_certs: False</code></pre>
 <p>So far we have been talking about pretty standard stuff with regards inventories. We&#8217;ve seen the type of facts and groups we get back from the foreman inventory plugin. But what if we want to dynamically create more groups based on the facts that we are getting back? Of course, if you have the necessary skills then you can modify the inventory plugin to return the information that you need. But, you may not need to do that. There is a really useful inventory plugin which serves this purpose. The <a href="https://docs.ansible.com/ansible/latest/plugins/inventory/constructed.html">constructed</a> inventory plugin takes information from another inventory source and uses that to construct new groups and variables. I really like this because it allows us to keep Ansible simple and avoid writing code if we don&#8217;t want to.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s use our foreman example above to construct a new group. As an example use case, let&#8217;s say I want to group hosts based on the Satellite node they are registred through. This would potentially allow me to identify which datacenter or network zone they are in which could be useful if I need to use a jump host to allow Ansible to manage them. Looking at the output above, we can see that this information is available as a variable:</p>
+<p>Let&#8217;s use our foreman example above to construct some new groups. As an example use case, let&#8217;s say I want to group hosts based on the Satellite node they are registred through. This would potentially allow me to identify which datacenter or network zone they are in which could be useful if I need to use a jump host to allow Ansible to manage them. Looking at the output above, we can see that this information is available as a variable:</p>
 </div>
 <div class="paragraph">
 <p><strong>foreman_subscription_facet_attributes.registered_through</strong></p>
@@ -516,7 +516,7 @@ required:
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580143979892"></script>
+    <script type="text/javascript" src="//cloudautomation.pharriso.co.uk/themes/casper/assets/js/jquery.fitvids.js?v=1580144043233"></script>
 
 
     <script>
