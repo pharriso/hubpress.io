@@ -162,9 +162,60 @@ My source control repository has the same structure as before with the exception
 ....
 inventories/
 ├── foreman_constructed.yml
-└── foreman.yaml
+└── foreman.yml
 ....
 
+I'm not going to walk through all of the objects in Tower in this section but rather list the basic objects that you need to create. 
+
+First, create a project which will pull in out inventory files from source control.
+
+image::https://cloudautomation.pharriso.co.uk/images/constructued-1-tower-project.png[]
 
 
+In our previous example we stored the details for our Satellite server in plaintext. We are going to use https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html[Ansible Tower's credential management] to store all of these details now. First we need to create a credential type in Tower. In the Tower UI, Navigate to *Credential Types* and add a new credential with the following details:
+
+.INPUT CONFIGURATION
+[source]
+....
+fields:
+  - id: FOREMAN_USER
+    type: string
+    label: Username
+  - id: FOREMAN_PASSWORD
+    type: string
+    label: Password
+    secret: true
+  - id: FOREMAN_SERVER
+    type: string
+    label: Satellite Server
+required:
+  - FOREMAN_USER
+  - FOREMAN_PASSWORD
+  - FOREMAN_SERVER
+....
+
+.INJECTOR CONFIGURATION
+[source]
+....
+env:
+  FOREMAN_PASSWORD: '{{ FOREMAN_PASSWORD }}'
+  FOREMAN_SERVER: '{{ FOREMAN_SERVER }}'
+  FOREMAN_USER: '{{ FOREMAN_USER }}'
+....
+
+You can look at the docs page for the various inventory plugins to understand what variables they expect. An example with a snippet of output can be seen below for the foreman plugin:
+
+[source]
+....
+ansible-doc -t inventory foreman
+
+= user
+        foreman authentication user
+
+        set_via:
+          env:
+          - name: FOREMAN_USER
+....
+
+Now that we have a credential type in Ansible Tower, we can create a credential using this new type. This should 
 
