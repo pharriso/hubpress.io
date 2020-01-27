@@ -71,10 +71,10 @@ ansible-inventory -i foreman.yaml --host prod-web1.demolab.local
         "upgradable_package_count": 0, 
 ...
 
-    "foreman_location_name": "intel", 
+    "foreman_location_name": "London", 
 ...
 
-    "foreman_organization_name": "pharriso", 
+    "foreman_organization_name": "Red Hat", 
 
 ....
 
