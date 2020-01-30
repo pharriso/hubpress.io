@@ -33,7 +33,7 @@ image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC with
 
 *How do we use them*
 
-Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node. The downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
+Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node which means that they provide additional execution capacity. The downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
 
 A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3. But there may also be times when I want to execute a playbook across managed nodes that may exist across all of those DC's. For example, push a patch to Dev servers across my entire estate. of course, I could have multple job templates defined to do this or execute multiple job templates.
 
