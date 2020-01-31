@@ -60,7 +60,8 @@ https://docs.ansible.com/ansible-tower/latest/html/administration/tipsandtricks.
 *How job execution works*
 
 * A request to run a job (Adhoc job or playbook) is submitted to Ansible Tower via the UI or API.
-* Tower executes the job
+* Tower executes the job locally and connects to the managed endpoints by proxying through the jump host.
+* 
 
 *how do we use jump hosts?*
 
