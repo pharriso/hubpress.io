@@ -64,26 +64,24 @@ https://docs.ansible.com/ansible-tower/latest/html/administration/tipsandtricks.
 
 *how do we use jump hosts?*
 
-To use a jump host, we need have an Ansible variable set. The variable would look something like this:
+To use a jump host, we need to have an Ansible variable set. The variable would look something like this:
 
 [source]
 ....
 ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q <user>@<jump_server_name>"'
 ....
 
-This can be assigned to groups of hosts for example using group_vars or host_vars.
+This variable can be assigned to hosts or groups of hosts, for example using group_vars or host_vars.
 
 *What are the benefits of using jump hosts?*
 
-We can assign jump hosts to managed nodes or groups of managed nodes using Ansible variables. This gives us 
-
-
+We can assign jump hosts to managed nodes or groups of managed nodes using Ansible variables. This means that we can execute a single job across hosts in different datacenters or isolated networks without having to assign execution nodes within Tower.
 
 *Are there limitations with using jump hosts*
 
 Jump hosts do not provide us with any additional capacity for automation as the Tower nodes are still responsible for executing the playbooks locally. The jump host is simply providing the proxied connection to the endpoint. In fact, the use of a jump host will add a performance penalty as we have an extra hop to make.
 
-=== pros and cons
+== Summary
 
 
 
