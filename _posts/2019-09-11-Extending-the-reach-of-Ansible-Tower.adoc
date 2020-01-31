@@ -12,10 +12,9 @@ So how can we extend the reach of Ansible Tower into these isolated networks?
 
 I'm going to use a really simple example here to explain what this might look like. In reality, you may have a lot more datacenters, a mix of public & private cloud and lot's of isolation between networks. In the following image, we have 3 datacenters (DC's). Ansible Tower is deployed in DC1. There is a DMZ in DC1 which is is segregated with a firewall. We also have DC2 and DC3. Again, seperated with firewalls.
 
-
 image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC.png[]
 
-In this scenario, in order for Tower to manage every node, we would need to open up firewall ports from Ansible Tower to every single managed node. This may not simply be SSH access either, we could be managing Windows hosts, network devices, cloud platforms and lot of other devices. In the case of our DMZ, we are now opening up a lot of connections between our DMZ hosts and our core network which is not desireable.
+In this scenario, in order for Tower to manage every node, we would need to open up firewall ports from Ansible Tower to every single managed node. This may not simply be SSH access either, we could be managing Windows hosts, network devices, cloud platforms and more. In the case of our DMZ, we are now opening up a lot of connections between our DMZ hosts and our core network which is not desireable.
 
 We may also need to consider the affect of our Tower host managing a lot of devices in a remote datacenter. We might not have a great link between our sites so it may be useful to reduce the amount of traffic going from our Tower node to our remote sites.
 
@@ -25,17 +24,26 @@ So how do we manage these isolated devices more effectively?
 
 === Isolated nodes 
 
-https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster, so we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints.
+https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster, so we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints. Further to this, Tower nodes only need SSH connectivity to the isolated nodes. The following diagram shows isolated nodes deployed in each DC and DMZ.
 
 image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC with Isolated nodes.png[]
 
-*how they work*
+*How job execution works*
 
-*How do we use them*
+* Request to run job (Adhoc job or playbook) is submitted to Ansible Tower via the UI or API.
+* Job details are sent to the isolated node using SSH.
+* Isolated node executes the job.
+* Tower polls the job status on the isolated node and reports the output.
 
-Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node which means that they provide additional execution capacity. The downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
+*How do we use isolated nodes?*
 
-A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3. But there may also be times when I want to execute a playbook across managed nodes that may exist across all of those DC's. For example, push a patch to Dev servers across my entire estate. of course, I could have multple job templates defined to do this or execute multiple job templates.
+Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node which means that they provide additional execution capacity. 
+
+*Are there limitations with isolated nodes?*
+
+But there may be times downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
+
+A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3 so we can assign an isolated node to the respective inventory to ensure that jobs are executed correctly. But there may also be times when I want to execute a playbook across managed nodes that may exist across all of those DC's. For example, push a patch to Dev servers across my entire estate. of course, I could have multple job templates defined that target 
 
 === Jump host
 
