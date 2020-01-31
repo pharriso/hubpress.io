@@ -24,36 +24,40 @@ So how do we manage these isolated devices more effectively?
 
 === Isolated nodes 
 
-https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster, so we can deploy them in isolated networks like DMZ's or in remote datacenters. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints. Further to this, Tower nodes only need SSH connectivity to the isolated nodes. The following diagram shows isolated nodes deployed in each DC and DMZ.
+https://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html[Isolated Nodes] are Tower nodes that aren't part of the core Tower cluster, but are capable of executing playbooks and ad-hoc jobs. These isolated nodes do not have the same constraints as the Tower cluster, meaning they don't need to be geographically co-located with the Tower nodes. This allows us to deploy them in remote datacenters. Another great use of isolated nodes is to deploy them into isolated networks such as DMZ's. Now we no longer need to open up firewall rules from Ansible Tower to every managed node. We can simply allow Tower to talk to the isolated nodes and they in turn manage the endpoints assigned to them. The following diagram shows isolated nodes deployed in each DC and DMZ. Note how we only need SSH (22/tcp) access between the Tower nodes and isolated nodes.
 
 image::https://cloudautomation.pharriso.co.uk/images/Ansible Tower Multi DC with Isolated nodes.png[]
 
 *How job execution works*
 
-* Request to run job (Adhoc job or playbook) is submitted to Ansible Tower via the UI or API.
-* Job details are sent to the isolated node using SSH.
-* Isolated node executes the job.
+* A request to run job (Adhoc job or playbook) is submitted to Ansible Tower via the UI or API.
+* Job details are sent to the relevant isolated node using SSH.
+* The isolated node executes the job.
 * Tower polls the job status on the isolated node and reports the output.
 
 *How do we use isolated nodes?*
 
-Isolated nodes need to be assigned to objects within Tower. Either a job template, inventory or organisation. The good thing is that we are offloading the execution of playbooks to the isolated node which means that they provide additional execution capacity. 
+Isolated nodes need to be assigned to objects within Tower. They can be assigned to either a job template, inventory or organisation. 
+
+*What are the benefits of using isolated nodes?*
+
+There are obvious benefits of using isolated nodes. They give us a way of targeting isolated networks and also give us a more efficient way of managing endpoints in remote datacenters - Tower only needs to send the job to the isolated node which in turn executes the job - keeping the execution local to the endpoints and reducing traffic over the network.
 
 *Are there limitations with isolated nodes?*
 
-But there may be times downside is that we aren't dynamically allocating the isolated node to hosts. In advance I need to assign it to something like an inventory. 
-
-A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3 so we can assign an isolated node to the respective inventory to ensure that jobs are executed correctly. But there may also be times when I want to execute a playbook across managed nodes that may exist across all of those DC's. For example, push a patch to Dev servers across my entire estate. of course, I could have multple job templates defined that target 
+There may be times when we want a more dynamic way of determing which node Ansible should use to connect to an endpoint. With isolated nodes, we need to assign them to something like an inventory before job execution. A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3 so we could assign an isolated node to the respective inventory to ensure that jobs are executed correctly. But there may also be times when I want to execute a playbook across managed nodes that exist across all of those DC's. For example, push a patch to all Development servers across my entire estate. Of course, we could have multple job templates or use a workflow to achieve this but this might not always be practical. 
 
 === Jump host
 
-The SSH jump hosts proxy ssh connections from Tower to the managed nodes that Tower can't access directly. In this scenario, the playbook is executed on the Tower node, so we aren't offloading work to the jump host. 
+Another way of The SSH jump hosts proxy ssh connections from Tower to the managed nodes that Tower can't access directly. In this scenario, the playbook is executed on the Tower node, so we aren't offloading work to the jump host. 
 
 But one of the benefits of the SSH jump hosts is that we can assoicate the jump host to groups of hosts as a variable. Now if I want to execute a playbook across hosts in different isolated networks, I no longer need to assign anything to the specific job template or inventory in Tower. I now have a variable which will automatically be used to connect to the host regardless of where it is.
 
 *image*
 
-*how they work*
+*How job execution works*
+
+* Request to run job (Adhoc job or playbook) is submitted to Ansible Tower via the UI or API.
 
 *how do we use them*
 
