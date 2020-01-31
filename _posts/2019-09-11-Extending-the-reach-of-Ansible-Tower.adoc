@@ -64,9 +64,14 @@ https://docs.ansible.com/ansible-tower/latest/html/administration/tipsandtricks.
 
 *how do we use jump hosts?*
 
-To use a jump host, we need use 
+To use a jump host, we need have an Ansible variable set. The variable would look something like this:
 
-ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q <user_name>@<jump_server_name>"'
+[source]
+....
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q <user>@<jump_server_name>"'
+....
+
+This can be assigned to groups of hosts for example using group_vars or host_vars.
 
 *What are the benefits of using jump hosts?*
 
