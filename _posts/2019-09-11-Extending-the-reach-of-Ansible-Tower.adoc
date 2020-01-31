@@ -43,13 +43,15 @@ Isolated nodes need to be assigned to objects within Tower. They can be assigned
 
 There are obvious benefits of using isolated nodes. They give us a way of targeting isolated networks and also give us a more efficient way of managing endpoints in remote datacenters - Tower only needs to send the job to the isolated node which in turn executes the job - keeping the execution local to the endpoints and reducing traffic over the network.
 
+Another key benefit with isolated nodes is the fact that we are offloading the job execution away from the Tower nodes. This means that isolated nodes provide us with a means increasing the scale of our automation platform.
+
 *Are there limitations with isolated nodes?*
 
 There may be times when we want a more dynamic way of determing which node Ansible should use to connect to an endpoint. With isolated nodes, we need to assign them to something like an inventory before job execution. A lot of the time this might be fine. Going back to our example, we would probably have separate inventories for DC1, DC1 DMZ, DC2 and DC3 so we could assign an isolated node to the respective inventory to ensure that jobs are executed correctly. But there may also be times when I want to execute a playbook across managed nodes that exist across all of those DC's. For example, push a patch to all Development servers across my entire estate. Of course, we could have multple job templates or use a workflow to achieve this but this might not always be practical. 
 
 === Jump host
 
-Another way of The SSH jump hosts proxy ssh connections from Tower to the managed nodes that Tower can't access directly. In this scenario, the playbook is executed on the Tower node, so we aren't offloading work to the jump host. 
+There is another way we can extend the reach of Tower. of The SSH jump hosts proxy ssh connections from Tower to the managed nodes that Tower can't access directly. In this scenario, the playbook is executed on the Tower node, so we aren't offloading work to the jump host. 
 
 But one of the benefits of the SSH jump hosts is that we can assoicate the jump host to groups of hosts as a variable. Now if I want to execute a playbook across hosts in different isolated networks, I no longer need to assign anything to the specific job template or inventory in Tower. I now have a variable which will automatically be used to connect to the host regardless of where it is.
 
