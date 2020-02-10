@@ -1,4 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 30 Jan 2020 15:32:24 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Cloud and Automation]]></title><description><![CDATA[This blog focuses mainly on Red Hat products in the Cloud and Automation space. I am currently working as a Solution Architect for Red Hat in the UK. ]]></description><link>http://cloudautomation.pharriso.co.uk</link><image><url>images/background.jpg</url><title>Cloud and Automation</title><link>http://cloudautomation.pharriso.co.uk</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 10 Feb 2020 15:56:40 GMT</lastBuildDate><atom:link href="http://cloudautomation.pharriso.co.uk/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Ansible Tower Dynamic Inventories - Manage Enabled Hosts]]></title><description><![CDATA[<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you have used <a href="https://docs.ansible.com/ansible-tower/latest/html/userguide/inventories.html#smart-inventories">dynamic inventories in Ansible Tower</a> before, you may have noticed that it adds some logic to determine whether a host should be enabled for job execution or not. For example, when syncing with our Red Hat Virtualisation environment, it has set some of our hosts to disabled.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/tower_inventory_disabled.png" alt="tower inventory disabled">
+</div>
+</div>
+<div class="paragraph">
+<p>Why do we get this behaviour? In the case of Red Hat Virtualisation you can probably tell from the screen shot - Tower will disable any VM&#8217;s which are powered off and we can see the VM&#8217;s which are disabled show a state of "status_down". For VMware, it will disable any VM&#8217;s where VMware tools isn&#8217;t reporting a guest state. A lot of the time this is really useful and can reduce job failures - why try to connect to a VM which is powered off? But, there may be times when you want to override this behaviour. For example, you might want to deploy VMware Tools to some guests, but they are being excluded from job execution. Another example we had recently was that we wanted to delete a bunch of VM&#8217;s in our Red Hat Virtualisation platform which were powered off, but they were being excluded - because they were powered off. Rather than powering on the VM&#8217;s so that we could delete them, we just amended the behaviour in Tower so that these VM&#8217;s weren&#8217;t marked as disabled.</p>
+</div>
+<div class="paragraph">
+<p>To see how Tower determines if a node is enabled or disabled, you can take a look in <strong>/var/lib/awx/venv/awx/lib/python3.6/site-packages/awx/settings/defaults.py</strong></p>
+</div>
+<div class="paragraph">
+<p>Looking at RHV (Upstream name is oVirt), we can see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># ---------------------
+# ----- oVirt4 -----
+# ---------------------
+RHV_ENABLED_VAR = 'status'
+RHV_ENABLED_VALUE = 'up'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for VMware:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># Inventory variable name/values for determining whether a host is
+# active in vSphere.
+VMWARE_ENABLED_VAR = 'guest.gueststate'
+VMWARE_ENABLED_VALUE = 'running'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_changing_the_default_behaviour">Changing the default behaviour</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have seen the default settings and know the variable names, we can override the default behaviour. The easiest way to do this is to create a custom configuration file in /etc/tower/conf.d and override the variable value. For example, to enable all VM&#8217;s regardless of power status you could create the following file and set the RHV_ENABLED_VALUE to be empty:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># cat /etc/tower/conf.d/custom.py
+RHV_ENABLED_VALUE = ''</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After creating this configuration file, restart the tower services:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># ansible-tower-service</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we sync the inventory we can now see that all of the hosts are enabled regardless of power state:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://cloudautomation.pharriso.co.uk/images/tower_inventory_enabled.png" alt="tower inventory enabled">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary">Summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ansible Tower tries to be helpful in the way it disables hosts that have been imported from dynamic inventories to try to avoid unnecessary job failures. If you need to configure this behaviour then you can follow the steps outlined above. These steps should not be confused with dynamic inventory filters, which will completely exclude a host from being imported into Ansible Tower.</p>
+</div>
+</div>
+</div>]]></description><link>http://cloudautomation.pharriso.co.uk/2020/02/10/Ansible-Tower-Dynamic-Inventories-Manage-Enabled-Hosts.html</link><guid isPermaLink="true">http://cloudautomation.pharriso.co.uk/2020/02/10/Ansible-Tower-Dynamic-Inventories-Manage-Enabled-Hosts.html</guid><pubDate>Mon, 10 Feb 2020 00:00:00 GMT</pubDate></item><item><title><![CDATA[Ansible Constructed Inventory Plugin]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this blog post we will look at how we can easily enrich an existing dynamic inventory using the constructed inventory plugin. But, before we do that, let&#8217;s take a step back.</p>
