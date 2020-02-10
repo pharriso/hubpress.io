@@ -48,7 +48,7 @@ After creating this configuration file, restart the tower services:
 
 Now when we sync the inventory we can now see that all hosts are enabled regardless of power state:
 
-
+image::https://cloudautomation.pharriso.co.uk/images/tower_inventory_enabled.png[]
 
 
 
