@@ -1,0 +1,9 @@
+= Ansible Tower - Dynamic Inventory Enabled Hosts
+
+If you have used dynamic inventories in Ansible Tower before, you may have noticed that it adds some logic to determine whether a host should be enabled for job execution or not. 
+
+For example, when syncing with our Red Hat Virtualisation environment, it has  set some of our hosts to disabled.
+
+
+In the case of Red Hat Virtualisation, Tower will disable any VM's which are powered off. For VMware, it will disable any VM's which aren't running VMware Tools. A lot of the time this is really useful and can reduce job failures - why try to connect to a VM which is powered off? But, there may be times when you want to override this behaviour. For example, we wanted to delete a bunch of VM's in our Red Hat Virtualisation platform which were powered off, but they were being excluded - because they were powered off. Rather than powering on the VM's so we could delete them, we just amended the behaviour in Tower so that these VM's weren't disabled.
+
