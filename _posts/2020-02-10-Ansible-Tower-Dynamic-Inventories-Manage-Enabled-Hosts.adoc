@@ -43,7 +43,7 @@ After creating this configuration file, restart the tower services:
 
 [source]
 ....
-# ansible-tower-service
+# ansible-tower-service restart
 ....
 
 Now when we sync the inventory we can now see that all of the hosts are enabled regardless of power state:
