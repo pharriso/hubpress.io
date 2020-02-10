@@ -52,7 +52,7 @@ image::https://cloudautomation.pharriso.co.uk/images/tower_inventory_enabled.png
 
 == Summary
 
-Ansible Tower tries to be helpful in the way it disables hosts that have been imported from dymanic inventories to try to avoid uncessary job failures. If you need to configure this behaviour then you can follow the steps outlined above. These steps should not be confused with dynamic inventory filters, which will completely exclude a host from being imported into Ansible Tower. 
+Ansible Tower tries to be helpful in the way it disables hosts that have been imported from dynamic inventories to try to avoid unnecessary job failures. If you need to configure this behaviour then you can follow the steps outlined above. These steps should not be confused with dynamic inventory filters, which will completely exclude a host from being imported into Ansible Tower. 
 
 
 
